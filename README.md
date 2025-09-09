@@ -1,7 +1,7 @@
 # ICS 372 Object Oriented Design and Implementation Group Project
 ## Contributors: 
 
-### Instructions:
+### Project Instructions:
 Your assignment is to design and build a tracking system for a restaurant that receives online orders
 through a 3rd party (FoodHub). Restaurant staff will need to be able to add orders that arrive, start orders
 so they can be prepared, and close orders which have been completed. It will be evaluated against the
