@@ -1,0 +1,1 @@
+rootProject.name = "ics372-group1"
