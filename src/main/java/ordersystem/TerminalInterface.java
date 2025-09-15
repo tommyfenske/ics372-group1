@@ -98,13 +98,17 @@ public class TerminalInterface {
     }
 
     /**
-     * Connects to FileHandler class to get JSON Order input files.
+     * Instantiates FileHandler class to get list of Orders, and passes them to OrderManager.
      * @author Tommy Fenske
      */
     private void jsonInput() {
         System.out.println("JSON Input");
         fileHandler fh = new fileHandler();
         fh.jsonParsing();
+
+        // TODO: When FileHandler and OrderManager have more functionality, pass orders between them
+        // ArrayList<Order> newOrders = fh.jsonParsing();
+        // OrderManager orderMan.incomingOrders(newOrders);
         System.out.println("done.");
     }
 
@@ -113,6 +117,7 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void listOrders() {
+        // TODO: When OrderManager has more functionality, call method to print orders.
         System.out.println("List Orders");
     }
 
@@ -129,6 +134,7 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void exportOrders() {
+        // TODO: When FileExport class is added, call method to export current orders from OrderManager class.
         System.out.println("Export Orders");
     }
 
@@ -151,5 +157,3 @@ public class TerminalInterface {
     }
 
 }
-
-
