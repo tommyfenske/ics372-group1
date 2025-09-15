@@ -2,10 +2,12 @@ package ordersystem;
 
 
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 
 /**
@@ -41,6 +43,10 @@ public class fileHandler {
 
     public void jsonParsing() {
 
+
+            ArrayList<Order> newOrders;
+
+
             //Array of files, if one file, only one element if many, many elements
             //Calling our private method
             File[] filesToParse = fileFinder();
@@ -54,10 +60,20 @@ public class fileHandler {
 
                         System.out.println("Loaded JSON data from files: " + singleFile.getName());
 
+                        JsonObject objectReader = Jreader.readObject();
+
+                        int orderID = objectReader.getInt("id");
+                        String type = objectReader.getString("type");
+                        String name = objectReader.getString("name");
+                        int quantity = objectReader.getInt("quantity");
+                        int time = objectReader.getInt("order_date");
+                        int price = objectReader.getInt("price");
 
                     } catch (Exception e) {
                         System.out.println("Failed to read file " + singleFile.getName());
                     }
+
+
 
 
                 }
