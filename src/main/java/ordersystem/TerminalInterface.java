@@ -3,6 +3,14 @@ package ordersystem;
 import java.io.*;
 import java.util.Scanner;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.swing.*;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
 /**
  * Used to interface with the user using the terminal.
  * The TerminalInterface should create FileHandlers as needed,
@@ -19,10 +27,13 @@ import java.util.Scanner;
  * 3. Manipulate current orders
  *      Start an order, display an order, complete an order
  *
- * 3. Export orders to JSON
+ * 4. Export orders to
+ *
+ * 5. Exit program
  */
 
 public class TerminalInterface {
+    private boolean exitProgram = false;
 
     /**
      * Constructor function that introduces the program and then prompts the user for a command
@@ -35,7 +46,9 @@ public class TerminalInterface {
         printStars();
         System.out.println();
 
-        getCommand();
+        while (!exitProgram) {
+            getCommand();
+        }
     }
 
     /**
@@ -54,6 +67,7 @@ public class TerminalInterface {
         System.out.println("[2]\tList Orders");
         System.out.println("[3]\tManipulate Orders");
         System.out.println("[4]\tExport Orders to JSON File");
+        System.out.println("[5]\tExit Program.");
         System.out.println();
 
         // Get integer input from user and store in command variable
@@ -74,29 +88,58 @@ public class TerminalInterface {
             case 4: // EXPORT TO JSON FILE
                 exportOrders();
                 break;
+            case 5:
+                exit();
+                break;
             default:
                 System.out.println("Invalid Command.");
                 break;
         }
     }
 
+    /**
+     * Connects to FileHandler class to get JSON Order input files.
+     * @author Tommy Fenske
+     */
     private void jsonInput() {
         System.out.println("JSON Input");
+        fileHandler fh = new fileHandler();
+        fh.jsonParsing();
+        System.out.println("done.");
     }
 
+    /**
+     * Connects to OrderManager class to get list all orders.
+     * @author Tommy Fenske
+     */
     private void listOrders() {
         System.out.println("List Orders");
     }
 
+    /**
+     *
+     * @author Tommy Fenske
+     */
     private void manipulateOrders() {
         System.out.println("Manipulate Orders");
     }
 
+    /**
+     * Connects to ? class to export current orders into a JSON file.
+     * @author Tommy Fenske
+     */
     private void exportOrders() {
         System.out.println("Export Orders");
     }
 
-
+    /**
+     * Exits the TerminalInterface part of the program.
+     * @author Tommy Fenske
+     */
+    private void exit() {
+        System.out.println("Exiting Program.");
+        exitProgram = true;
+    }
 
     /**
      * Prints a line of spaced out stars to make the program look nice.
