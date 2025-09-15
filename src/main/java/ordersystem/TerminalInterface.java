@@ -26,9 +26,11 @@ import java.util.Scanner;
 
 public class TerminalInterface {
     private boolean exitProgram = false;
+    private final Scanner myScan = new Scanner(System.in);
 
     /**
-     * Constructor function that introduces the program and then prompts the user for a command
+     * Constructor function that introduces the program and then starts the command loop
+     * until the user is done with the program.
      * @author Tommy Fenske
      */
     public TerminalInterface() {
@@ -44,27 +46,24 @@ public class TerminalInterface {
     }
 
     /**
-     * Prints commands available to the user, and gets input on what command to run.
+     * Prints general commands available to the user, and gets input on what command to run.
      * @return void
      * @author Tommy Fenske
      */
     public void getCommand() {
-        // Declare scanner object
-        Scanner myScan = new Scanner(System.in);
-
         // Output list of commands
         printStars();
         System.out.println("Commands:");
         System.out.println("[1]\tInput Order from JSON File");
         System.out.println("[2]\tList Orders");
-        System.out.println("[3]\tManipulate Orders");
+        System.out.println("[3]\tManipulate Incoming Orders");
         System.out.println("[4]\tExport Orders to JSON File");
         System.out.println("[5]\tExit Program.");
+        printStars();
         System.out.println();
 
         // Get integer input from user and store in command variable
-        System.out.print("Enter the integer of the command you would like: ");
-        int command = myScan.nextInt();
+        int command = getIntInput();
 
         // Choose what command to run
         switch (command) {
@@ -99,6 +98,7 @@ public class TerminalInterface {
         fh.jsonParsing();
 
         // TODO: When FileHandler and OrderManager have more functionality, pass orders between them
+        // TODO: Maybe OrderManager should directly instantiate FileHandler to reduce coupling?
         // ArrayList<Order> newOrders = fh.jsonParsing();
         // OrderManager orderMan.incomingOrders(newOrders);
         System.out.println("JSON Input Finished.");
@@ -118,11 +118,46 @@ public class TerminalInterface {
     }
 
     /**
-     *
+     * Prints order manipulation commands available to the user,
+     * and gets input on what command to run. Then calls the appropriate
+     * method in the Order Manager class.
      * @author Tommy Fenske
      */
     private void manipulateOrders() {
         System.out.println("Manipulate Orders Started.");
+
+        // Output list of commands
+        printStars();
+        System.out.println("Manipulate Incoming Order Commands:");
+        System.out.println("[1]\tStart Order");
+        System.out.println("[2]\tDisplay Order");
+        System.out.println("[3]\tComplete Order");
+        System.out.println("[4]\tBack");
+        printStars();
+        System.out.println();
+
+        // Get integer input from user and store in command variable
+        System.out.print("Enter the integer of the command you would like: ");
+        int command = getIntInput();
+
+        // Choose what command to run
+        switch (command) {
+            case 1: // START ORDER
+                // orderMan.startOrder();
+                break;
+            case 2: // DISPLAY ORDER
+                // orderMan.displayOrder();
+                break;
+            case 3: // COMPLETE ORDER
+                // orderMan.completeOrder();
+                break;
+            case 4: // BACK
+                break;
+            default:
+                System.out.println("Invalid Command.");
+                break;
+        }
+
         System.out.println("Manipulate Orders Finished.");
     }
 
@@ -142,7 +177,18 @@ public class TerminalInterface {
      */
     private void exit() {
         System.out.println("Exiting Program.");
+        myScan.close();
         exitProgram = true;
+    }
+
+    /**
+     * Prompts the user to input an integer to be used in commands
+     * @return The next integer the user inputs
+     * @author Tommy Fenske
+     */
+    private int getIntInput() {
+        System.out.print("Enter the integer of desired command: ");
+        return myScan.nextInt();
     }
 
     /**
