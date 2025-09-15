@@ -3,14 +3,6 @@ package ordersystem;
 import java.io.*;
 import java.util.Scanner;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.swing.*;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-
 /**
  * Used to interface with the user using the terminal.
  * The TerminalInterface should create FileHandlers as needed,
@@ -102,14 +94,14 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void jsonInput() {
-        System.out.println("JSON Input");
+        System.out.println("JSON Input Started.");
         fileHandler fh = new fileHandler();
         fh.jsonParsing();
 
         // TODO: When FileHandler and OrderManager have more functionality, pass orders between them
         // ArrayList<Order> newOrders = fh.jsonParsing();
         // OrderManager orderMan.incomingOrders(newOrders);
-        System.out.println("done.");
+        System.out.println("JSON Input Finished.");
     }
 
     /**
@@ -118,7 +110,11 @@ public class TerminalInterface {
      */
     private void listOrders() {
         // TODO: When OrderManager has more functionality, call method to print orders.
-        System.out.println("List Orders");
+        System.out.println("List Orders Started.");
+
+        // OrderManager orderMan.listOrders();
+
+        System.out.println("List Orders Finished.");
     }
 
     /**
@@ -126,7 +122,8 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void manipulateOrders() {
-        System.out.println("Manipulate Orders");
+        System.out.println("Manipulate Orders Started.");
+        System.out.println("Manipulate Orders Finished.");
     }
 
     /**
@@ -135,7 +132,8 @@ public class TerminalInterface {
      */
     private void exportOrders() {
         // TODO: When FileExport class is added, call method to export current orders from OrderManager class.
-        System.out.println("Export Orders");
+        System.out.println("Export Orders Started.");
+        System.out.println("Export Orders Finished.");
     }
 
     /**
