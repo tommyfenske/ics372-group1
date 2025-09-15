@@ -16,7 +16,7 @@ public class Order {
     private LocalDateTime openTime;
     private LocalDateTime startTime;
     private LocalDateTime closeTime;
-    private List<Item> items = new ArrayList<Item>(8);
+    private List<Item> items = new ArrayList<Item>();
     private double total = 0;
 
 
