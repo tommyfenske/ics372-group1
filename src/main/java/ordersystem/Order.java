@@ -1,29 +1,76 @@
 package ordersystem;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Example class for an Order.
- * Variable types may be incorrect. This is a placeholder
- * until we determine a better implementation.
- * @author Tommy Fenske
+ * Order object handles all the item details of a customer's order details:
+ * @author Jordan Curtis
  */
 
 public class Order {
-    private int id;
-    private String type;
-    // Food items data structure
-    private int quantity;
-    private int time;
-    private int price;
+    static int latestID = 0;
+    private final int orderID = ++latestID;
+    private String orderType;
+    private String status = "Incomplete";
+    private LocalDateTime openTime;
+    private LocalDateTime startTime;
+    private LocalDateTime closeTime;
+    private List<Item> items = new ArrayList<Item>();
+    private double total = 0;
 
-    public Order(int id, String type, int quantity, int time, int price) {
-        // Constructor
+
+    public Order(String orderType, List<Item> items) {
+        this.openTime = LocalDateTime.now();
+        this.orderType = orderType;
+        this.items = items;
+
+        for(Item item: items) {
+            total += item.getPrice();
+        }
     }
 
-    public int getId() {
-        return id;
+    public int getOrderID() {
+        return this.orderID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getOrderType() {
+        return this.orderType;
     }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void getOrderDetails() {
+        double sum = 0;
+
+        for(Item item: items) {
+            System.out.println(item.toString());
+        }
+
+        System.out.println("\nTOTAL: " + sum);
+    }
+
+    // Throws InvalidOrderStatusChange when attempting to start an already started or closed order.
+    public void startOrder() throws InvalidOrderStatusChange {
+        if (this.status.equalsIgnoreCase("Started") || this.status.equalsIgnoreCase("Closed")) {
+            throw new InvalidOrderStatusChange("Order has already been started.");
+        }
+
+        this.startTime = LocalDateTime.now();
+        this.status = "Started";
+
+    }
+
+    // Throws InvalidOrderStatusChange when attempting to close an already closed or incomplete order.
+    public void closeOrder() throws InvalidOrderStatusChange {
+        if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Incomplete")) {
+            throw new InvalidOrderStatusChange("Order has already been closed.");
+        }
+
+        this.closeTime = LocalDateTime.now();
+        this.status = "Closed";
+    }
+
 }
