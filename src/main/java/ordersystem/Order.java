@@ -14,7 +14,6 @@ public class Order {
     private String orderType;
     private String status = "Incomplete";
     private LocalDateTime openTime;
-    private LocalDateTime startTime;
     private LocalDateTime closeTime;
     private List<Item> items = new ArrayList<Item>();
     private double total = 0;
@@ -32,6 +31,10 @@ public class Order {
 
     public int getOrderID() {
         return this.orderID;
+    }
+
+    public String getOpenTime() {
+        return this.openTime.toString();
     }
 
     public String getOrderType() {
@@ -58,7 +61,6 @@ public class Order {
             throw new InvalidOrderStatusChange("Order has already been started.");
         }
 
-        this.startTime = LocalDateTime.now();
         this.status = "Started";
 
     }
