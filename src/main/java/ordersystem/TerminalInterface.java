@@ -94,7 +94,7 @@ public class TerminalInterface {
      */
     private void jsonInput() {
         System.out.println("JSON Input Started.");
-        fileHandler fh = new fileHandler();
+        FileHandler fh = new FileHandler();
         fh.jsonParsing();
 
         // TODO: When FileHandler and OrderManager have more functionality, pass orders between them
@@ -149,7 +149,7 @@ public class TerminalInterface {
                 // orderMan.displayOrder();
                 break;
             case 3: // COMPLETE ORDER
-                // orderMan.completeOrder();
+                // orderMan.completeOrder(orderID);
                 break;
             case 4: // BACK
                 break;
