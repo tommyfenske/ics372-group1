@@ -19,14 +19,14 @@ import java.util.ArrayList;
  */
 
 
-public class fileHandler {
+public class FileHandler {
 
 
     //Main method using all my other methods
 
     public static void main(String[] args) {
 
-        new fileHandler().jsonParsing();
+        new FileHandler().jsonParsing();
 
 
     }
