@@ -42,6 +42,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return String.format("Item: %s, Price: %f, Quantity %d", name, price, quantity);
+        return String.format("Item: %s, Price: %.2f, Quantity %d", name, price, quantity);
     }
 }
