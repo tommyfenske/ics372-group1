@@ -109,7 +109,17 @@ public class TerminalInterface {
         // TODO: When OrderManager has more functionality, call method to print orders.
         System.out.println("List Orders Started.");
 
-        // OrderManager orderMan.listOrders();
+        System.out.println("Incoming Orders: ");
+        orderManager.printIncomingOrders();
+        System.out.println();
+
+        System.out.println("Started Orders: ");
+        orderManager.printStartedOrders();
+        System.out.println();
+
+        System.out.println("Completed Orders: ");
+        orderManager.printCompletedOrders();
+        System.out.println();
 
         System.out.println("List Orders Finished.");
     }

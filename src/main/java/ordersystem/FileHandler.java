@@ -1,13 +1,12 @@
 package ordersystem;
 
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,17 +29,16 @@ public class FileHandler {
      * @return One or more Objects of Order type
      */
 
-    public void jsonParsing() {
-
-
-
-
-            // TODO: Parse for order types and return an arayList of Orders, that have a List of items
+    public List<Order> jsonParsing() {
             //Array of files, if one file, only one element if many, many elements
             //Calling our private method
             File[] filesToParse = fileFinder();
 
-            if (filesToParse != null) {
+            // Create ArrayList of orders to return
+            ArrayList<Order> ordersToReturn = new ArrayList<>();
+
+            if (filesToParse == null) return ordersToReturn; //if empty files, return empty arraylist
+            else {
 
                 for (File singleFile : filesToParse) {
                     try {
@@ -48,22 +46,37 @@ public class FileHandler {
                                 Json.createReader(new FileReader(singleFile));
 
                         System.out.println("Loaded JSON data from files: " + singleFile.getName());
+                        // Get JSON "order" object
+                        JsonObject orderObject = Jreader.readObject().getJsonObject("order");
 
-                        JsonObject objectReader = Jreader.readObject();
+                        // Get Order Type
+                        String orderType = orderObject.getString("type");
 
+                        // Get JSONArray of items
+                        JsonArray jsonItems = orderObject.getJsonArray("items");
+                        // Create empty List of Items
+                        List<Item> orderItems = new ArrayList<>();
 
+                        // Add each JSON item to orderItems
+                        for (int i = 0; i < jsonItems.size(); i++) {
+                            JsonObject jsonItem = jsonItems.getJsonObject(i);
+                            Item newItem = new Item(
+                                    jsonItem.getString("name"),
+                                    (float)jsonItem.getJsonNumber("price").doubleValue(),
+                                    jsonItem.getInt("quantity"));
+                            orderItems.add(newItem);
+                        }
 
-                        //Order currentOrder = new Order(type, );
+                        // Fill Out New Order Object
+                        Order newOrder = new Order(orderType,  orderItems);
+                        ordersToReturn.add(newOrder);
 
                     } catch (Exception e) {
-                        System.out.println("Failed to read file " + singleFile.getName());
+                        System.out.println("Failed to read file " + singleFile.getName() + ", " +e);
                     }
-
-
-
-
                 }
-
+                // Return filled ArrayList of Orders
+                return ordersToReturn;
             }
 
 

@@ -14,10 +14,11 @@ public class OrderManager {
     private List<Order> completedOrders;
 
     public OrderManager() {
-        terminalInterface = new TerminalInterface(this);
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
+
+        terminalInterface = new TerminalInterface(this);
     }
 
     /**
@@ -28,14 +29,14 @@ public class OrderManager {
      */
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
-        fh.jsonParsing();
-        // TODO: delete line above and replace with comments below once FileHandler returns ArrayList
-        //ArrayList<Order> newOrders = fh.jsonParsing();
-        /*
+        List<Order> newOrders = fh.jsonParsing();
+
+        System.out.printf("Adding %d orders.\n", newOrders.size());
         for (Order order : newOrders) {
-            incomingOrders.add(order);
+            System.out.println(order.toString());
         }
-         */
+        incomingOrders.addAll(newOrders);
+
     }
 
     /**
@@ -70,4 +71,5 @@ public class OrderManager {
             System.out.println(order.toString());
         }
     }
+
 }
