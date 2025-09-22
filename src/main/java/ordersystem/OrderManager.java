@@ -40,6 +40,33 @@ public class OrderManager {
     }
 
     /**
+     * Returns the Incoming Orders Arraylist of unstarted orders
+     * @return ArrayList<Order> incomingOrders
+     * @author Tommy Fenske
+     */
+    public List<Order> getIncomingOrders() {
+        return incomingOrders;
+    }
+
+    /**
+     * Returns the Started Orders Arraylist of started but uncompleted orders
+     * @return ArrayList<Order> startedOrders
+     * @author Tommy Fenske
+     */
+    public List<Order> getStartedOrders() {
+        return startedOrders;
+    }
+
+    /**
+     * Returns the Started Orders Arraylist of completed orders
+     * @return ArrayList<Order> completedOrders
+     * @author Tommy Fenske
+     */
+    public List<Order> getCompletedOrders() {
+        return completedOrders;
+    }
+
+    /**
      * Prints each Order object in incomingOrders ArrayList
      * @return void
      * @author Tommy Fenske

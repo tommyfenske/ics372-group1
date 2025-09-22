@@ -1,6 +1,7 @@
 package ordersystem;
 
 import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -59,7 +60,7 @@ public class TerminalInterface {
         System.out.println("Commands:");
         System.out.println("[1]\tInput Order from JSON File");
         System.out.println("[2]\tList Orders");
-        System.out.println("[3]\tManipulate Incoming Orders");
+        System.out.println("[3]\tManipulate Orders");
         System.out.println("[4]\tExport Orders to JSON File");
         System.out.println("[5]\tExit Program.");
         printStars();
@@ -144,19 +145,38 @@ public class TerminalInterface {
         System.out.println();
 
         // Get integer input from user and store in command variable
-        System.out.print("Enter the integer of the command you would like: ");
         int command = getIntInput();
 
         // Choose what command to run
         switch (command) {
             case 1: // START ORDER
-                // orderMan.startOrder();
+                List<Order> incoming = orderManager.getIncomingOrders();
+
+                printStars();
+                System.out.println("Incoming Orders Not Started:");
+                if (incoming.isEmpty()) {
+                    System.out.println("NO INCOMING ORDERS");
+                    printStars();
+                    break;
+                } else {
+                    for (Order o :  incoming) {
+                        System.out.println(o);
+                    }
+                    printStars();
+                    getIDInput();
+                }
+                // orderManager.startOrder(orderID)
+
                 break;
             case 2: // DISPLAY ORDER
-                // orderMan.displayOrder();
+                // First print all orders
+                // Get id of order to display
+                // orderManager.displayOrder(orderID);
                 break;
             case 3: // COMPLETE ORDER
-                // orderMan.completeOrder(orderID);
+                // First display orderManager.startedOrders
+                // Get id of order to complete
+                // orderManager.completeOrder(orderID);
                 break;
             case 4: // BACK
                 break;
@@ -197,6 +217,18 @@ public class TerminalInterface {
         System.out.print("Enter the integer of desired command: ");
         return myScan.nextInt();
     }
+
+    /**
+     * Prompts the user to input an id to be used in commands
+     * @return The next integer the user inputs
+     * @author Tommy Fenske
+     */
+    private int getIDInput() {
+        System.out.print("Enter the ID of desired order: ");
+        return myScan.nextInt();
+    }
+
+
 
     /**
      * Prints a line of spaced out stars to make the program look nice.
