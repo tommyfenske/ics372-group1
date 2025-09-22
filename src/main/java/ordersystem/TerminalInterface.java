@@ -27,13 +27,16 @@ import java.util.Scanner;
 public class TerminalInterface {
     private boolean exitProgram = false;
     private final Scanner myScan = new Scanner(System.in);
+    private OrderManager orderManager;
 
     /**
      * Constructor function that introduces the program and then starts the command loop
      * until the user is done with the program.
      * @author Tommy Fenske
      */
-    public TerminalInterface() {
+    public TerminalInterface(OrderManager orderManager) {
+        this.orderManager = orderManager;
+
         printStars();
         System.out.println("\nRestaurant Order Tracking System");
         System.out.println("By ICS 372 Group 1\n");
@@ -94,13 +97,7 @@ public class TerminalInterface {
      */
     private void jsonInput() {
         System.out.println("JSON Input Started.");
-        FileHandler fh = new FileHandler();
-        fh.jsonParsing();
-
-        // TODO: When FileHandler and OrderManager have more functionality, pass orders between them
-        // TODO: Maybe OrderManager should directly instantiate FileHandler to reduce coupling?
-        // ArrayList<Order> newOrders = fh.jsonParsing();
-        // OrderManager orderMan.incomingOrders(newOrders);
+        orderManager.fileFromJSON();
         System.out.println("JSON Input Finished.");
     }
 

@@ -21,17 +21,6 @@ import java.util.ArrayList;
 
 public class FileHandler {
 
-
-    //Main method using all my other methods
-
-    public static void main(String[] args) {
-
-        new FileHandler().jsonParsing();
-
-
-    }
-
-
     /**
      * Creating the logic that takes in the JSON files and turns them into
      * Order type objects, extracting all the necessary things
@@ -44,9 +33,9 @@ public class FileHandler {
     public void jsonParsing() {
 
 
-            ArrayList<Order> newOrders;
 
 
+            // TODO: Parse for order types and return an arayList of Orders, that have a List of items
             //Array of files, if one file, only one element if many, many elements
             //Calling our private method
             File[] filesToParse = fileFinder();
@@ -62,12 +51,9 @@ public class FileHandler {
 
                         JsonObject objectReader = Jreader.readObject();
 
-                        int orderID = objectReader.getInt("id");
-                        String type = objectReader.getString("type");
-                        String name = objectReader.getString("name");
-                        int quantity = objectReader.getInt("quantity");
-                        int time = objectReader.getInt("order_date");
-                        int price = objectReader.getInt("price");
+
+
+                        //Order currentOrder = new Order(type, );
 
                     } catch (Exception e) {
                         System.out.println("Failed to read file " + singleFile.getName());

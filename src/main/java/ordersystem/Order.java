@@ -75,4 +75,14 @@ public class Order {
         this.status = "Closed";
     }
 
+    /**
+     * Overrides the toString method to print the Order's ID, type, and status
+     * TODO: Change what this method prints? Create multiple versions for different applications?
+     * @author Tommy Fenske
+     */
+    @Override
+    public String toString() {
+        return String.format("Order ID:%d, Type: %s, Status: %s", this.orderID, this.orderType, this.status);
+    }
+
 }

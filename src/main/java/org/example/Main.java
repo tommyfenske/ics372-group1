@@ -1,6 +1,7 @@
 package org.example;
 
 
+import ordersystem.OrderManager;
 import ordersystem.TerminalInterface;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -11,6 +12,7 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         System.out.println("Program Started.");
 
-        TerminalInterface terminalInterface = new TerminalInterface();
+        OrderManager orderManager = new OrderManager();
+        //TerminalInterface terminalInterface = new TerminalInterface();
     }
 }
