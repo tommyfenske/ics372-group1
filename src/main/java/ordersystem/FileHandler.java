@@ -47,7 +47,11 @@ public class FileHandler {
 
                         System.out.println("Loaded JSON data from files: " + singleFile.getName());
                         // Get JSON "order" object
-                        JsonObject orderObject = Jreader.readObject().getJsonObject("order");
+
+                        JsonObject readObject = Jreader.readObject();
+
+                        // TODO: currently this only supports one "order" object per file
+                        JsonObject orderObject = readObject.getJsonObject("order");
 
                         // Get Order Type
                         String orderType = orderObject.getString("type");
