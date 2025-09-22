@@ -123,11 +123,11 @@ public class OrderManager {
     /**
      * TODO: Write the code to fit the below description of the function
      * Searches the all Order Lists for the orderID,
-     * if a matching ID is found, call an Order method to display order details
-     * if no matching ID is found, return false
+     * if a matching ID is found, return the order
+     * if no matching ID is found, return null
      */
-    boolean displayOrder(int orderID) {
-        return false;
+    Order getOrder(int orderID) {
+        return null;
     }
 
 }

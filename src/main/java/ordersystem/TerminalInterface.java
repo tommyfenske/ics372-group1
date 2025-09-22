@@ -185,9 +185,19 @@ public class TerminalInterface {
                 orderManager.printStartedOrders();
                 System.out.println("Completed Orders:");
                 orderManager.printCompletedOrders();
-                // Get id of order to display
-                id = getIDInput();
-                result = orderManager.displayOrder(id);
+                printStars();
+
+                id = getIDInput(); // Get id of order to display
+                Order toDisplay = orderManager.getOrder(id); // Get Order object from OrderManager
+                if (toDisplay == null) {
+                    System.out.println("No order matches the ID: " + id);
+                    break;
+                } else {
+                    System.out.printf("Displaying order ID: %d\n", id);
+                    printStars();
+                    System.out.println(toDisplay.displayOrder()); // Print order details
+                    printStars();
+                }
                 break;
             case 3: // COMPLETE ORDER
                 List<Order> started = orderManager.getStartedOrders();
