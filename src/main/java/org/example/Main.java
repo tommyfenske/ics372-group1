@@ -1,7 +1,7 @@
 package org.example;
-
-
 import ordersystem.OrderManager;
+import ordersystem.ExportFile;
+
 import ordersystem.TerminalInterface;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -14,5 +14,10 @@ public class Main {
 
         OrderManager orderManager = new OrderManager();
         //TerminalInterface terminalInterface = new TerminalInterface();
+
+        ExportFile exporter = new ExportFile(orderManager);
+
+        // Test if ExportFile can talk to OrderManager
+        exporter.testConnection();
     }
 }

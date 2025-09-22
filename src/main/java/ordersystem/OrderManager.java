@@ -70,4 +70,12 @@ public class OrderManager {
             System.out.println(order.toString());
         }
     }
+
+    /**
+     * This method is needed in the ExportFile class to get Completed Orders from OrderManager.
+      * @return list of completed orders
+     */
+    public List<Order> getCompletedOrders() {
+        return completedOrders; // Return the completedOrders
+    }
 }
