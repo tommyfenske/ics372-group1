@@ -99,4 +99,25 @@ public class OrderManager {
         }
     }
 
+    /**
+     * TODO: Write the code to fit the below description of the function
+     * Searches the incomingOrders List for the orderID,
+     * if a matching ID is found, move the order from incomingOrders to startedOrders List and return true
+     * if no matching ID is found, return false
+     * @return true if ID found, otherwise false
+     */
+    boolean startOrder(int orderID) {
+        return false;
+    }
+
+    /**
+     * TODO: Write the code to fit the below description of the function
+     * Searches the startedOrders List for the orderID,
+     * if a matching ID is found, move the order from startedOrders to completedOrders List and return true
+     * if no matching ID is found, return false
+     */
+    boolean completeOrder(int orderID) {
+        return false;
+    }
+
 }
