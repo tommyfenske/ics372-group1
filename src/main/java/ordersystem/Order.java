@@ -82,7 +82,16 @@ public class Order {
      */
     @Override
     public String toString() {
-        return String.format("Order ID:%d, Type: %s, Status: %s", this.orderID, this.orderType, this.status);
+        return String.format("Order ID: %d, Type: %s, Status: %s", this.orderID, this.orderType, this.status);
     }
 
+    public String displayOrder() {
+        String handler = toString();
+
+        for(Item item: items) {
+            handler = handler + "\n" + item.toString();
+        }
+
+        return handler;
+    }
 }
