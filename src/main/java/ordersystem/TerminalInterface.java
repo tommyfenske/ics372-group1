@@ -148,13 +148,16 @@ public class TerminalInterface {
         int command = getIntInput();
 
         // Choose what command to run
+        int id; // id of order to be manipulated, assigned later by user input
+        boolean result; // result of commands being sent to OrderManager;
         switch (command) {
             case 1: // START ORDER
                 List<Order> incoming = orderManager.getIncomingOrders();
 
+                // Print incoming orders and get id from user
                 printStars();
                 System.out.println("Incoming Orders Not Started:");
-                if (incoming.isEmpty()) {
+                if (incoming.isEmpty()) { // if no incoming orders, exit
                     System.out.println("NO INCOMING ORDERS");
                     printStars();
                     break;
@@ -163,20 +166,52 @@ public class TerminalInterface {
                         System.out.println(o);
                     }
                     printStars();
-                    getIDInput();
+                    id = getIDInput();
+                    result = orderManager.startOrder(id);
+                    if (!result) {
+                        System.out.printf("No order matches the ID: %d\n", id);
+                    } else {
+                        System.out.printf("Order ID: %d has been started.\n", id);
+                    }
                 }
-                // orderManager.startOrder(orderID)
 
                 break;
             case 2: // DISPLAY ORDER
-                // First print all orders
+                // Print all orders
+                printStars();
+                System.out.println("Incoming Orders:");
+                orderManager.printIncomingOrders();
+                System.out.println("Started Orders:");
+                orderManager.printStartedOrders();
+                System.out.println("Completed Orders:");
+                orderManager.printCompletedOrders();
                 // Get id of order to display
-                // orderManager.displayOrder(orderID);
+                id = getIDInput();
+                result = orderManager.displayOrder(id);
                 break;
             case 3: // COMPLETE ORDER
-                // First display orderManager.startedOrders
-                // Get id of order to complete
-                // orderManager.completeOrder(orderID);
+                List<Order> started = orderManager.getStartedOrders();
+
+                // Print incoming orders and get id from user
+                printStars();
+                System.out.println("Started Orders Not Completed:");
+                if (started.isEmpty()) { // if no incoming orders, exit
+                    System.out.println("NO STARTED ORDERS");
+                    printStars();
+                    break;
+                } else {
+                    for (Order o :  started) {
+                        System.out.println(o);
+                    }
+                    printStars();
+                    id = getIDInput();
+                    result = orderManager.completeOrder(id);
+                    if (!result) {
+                        System.out.printf("No order matches the ID: %d\n", id);
+                    } else {
+                        System.out.printf("Order ID: %d has been completed.\n", id);
+                    }
+                }
                 break;
             case 4: // BACK
                 break;
@@ -195,6 +230,7 @@ public class TerminalInterface {
     private void exportOrders() {
         // TODO: When FileExport class is added, call method to export current orders from OrderManager class.
         System.out.println("Export Orders Started.");
+        // orderManager.exportOrdersToJSON();
         System.out.println("Export Orders Finished.");
     }
 
