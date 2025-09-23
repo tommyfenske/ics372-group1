@@ -40,7 +40,8 @@ public class OrderManager {
      * For all 3 Lists of Orders, writes Orders and corresponding Items to one JSON file.
      */
     void exportOrdersToJSON() {
-
+        ExportFile ef = new ExportFile();
+        ef.exportOrdersToJSON(incomingOrders, startedOrders, completedOrders);
     }
 
     /**
