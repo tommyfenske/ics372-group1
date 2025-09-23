@@ -1,17 +1,17 @@
 package org.example;
-import ordersystem.OrderManager;
+import ordersystem.*;
 import ordersystem.ExportFile;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Program Started.");
 
-        OrderManager orderManager = new OrderManager();
-        //TerminalInterface terminalInterface = new TerminalInterface();
+        //OrderManager orderManager = new OrderManager();
+        TerminalInterface terminalInterface = new TerminalInterface();
 
-        ExportFile exporter = new ExportFile(orderManager);
+        //ExportFile exporter = new ExportFile(orderManager);
 
         // Test if ExportFile can talk to OrderManager
-        exporter.testConnection();
+        //exporter.testConnection();
     }
 }

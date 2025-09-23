@@ -6,9 +6,6 @@ import java.util.*;
  * This class handles all of the orders, started, incompleted and completed
  */
 public class OrderManager {
-    // How the user interacts with the OrderManager
-    private TerminalInterface terminalInterface;
-
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
     private List<Order> completedOrders;
@@ -17,8 +14,6 @@ public class OrderManager {
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
-
-        terminalInterface = new TerminalInterface(this);
     }
 
     /**
@@ -36,6 +31,15 @@ public class OrderManager {
             System.out.println(order.toString());
         }
         incomingOrders.addAll(newOrders);
+
+    }
+
+    /**
+     * TODO: Write the code to fit the below description of the function
+     * Instantiates the FileExport class
+     * For all 3 Lists of Orders, writes Orders and corresponding Items to one JSON file.
+     */
+    void exportOrdersToJSON() {
 
     }
 

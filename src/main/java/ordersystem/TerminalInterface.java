@@ -3,6 +3,7 @@ package ordersystem;
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
+import ordersystem.OrderManager;
 
 /**
  * Used to interface with the user using the terminal.
@@ -35,8 +36,8 @@ public class TerminalInterface {
      * until the user is done with the program.
      * @author Tommy Fenske
      */
-    public TerminalInterface(OrderManager orderManager) {
-        this.orderManager = orderManager;
+    public TerminalInterface() {
+        orderManager = new OrderManager();
 
         printStars();
         System.out.println("\nRestaurant Order Tracking System");
