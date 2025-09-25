@@ -89,7 +89,7 @@ public class OrderManager {
      * if a matching ID is found, move the order from incomingOrders to startedOrders List and return true
      * if no matching ID is found, return false
      * @return true if ID found, otherwise false
-     * @author Majid Farah
+     * @author Majid  Farah
      */
     boolean startOrder(int orderID) {
         Iterator<Order> iterator = incomingOrders.iterator();
