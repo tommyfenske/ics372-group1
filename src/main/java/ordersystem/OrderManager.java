@@ -6,11 +6,15 @@ import java.util.*;
  * This class handles all of the orders, started, incompleted and completed
  */
 public class OrderManager {
+    // How the user interacts with the OrderManager
+    private TerminalInterface terminalInterface;
+
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
     private List<Order> completedOrders;
 
     public OrderManager() {
+        terminalInterface = new TerminalInterface();
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
@@ -19,60 +23,25 @@ public class OrderManager {
     /**
      * Instantiates the FileHandler class which returns an ArrayList of Orders.
      * Then adds each of the returned Orders to the incomingOrders ArrayList.
+     *
      * @return void
      * @author Tommy Fenske
      */
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
-        List<Order> newOrders = fh.jsonParsing();
-
-        System.out.printf("Adding %d orders.\n", newOrders.size());
+        fh.jsonParsing();
+        // TODO: delete line above and replace with comments below once FileHandler returns ArrayList
+        //ArrayList<Order> newOrders = fh.jsonParsing();
+        /*
         for (Order order : newOrders) {
-            System.out.println(order.toString());
+            incomingOrders.add(order);
         }
-        incomingOrders.addAll(newOrders);
-
-    }
-
-    /**
-     * TODO: Write the code to fit the below description of the function
-     * Instantiates the FileExport class
-     * For all 3 Lists of Orders, writes Orders and corresponding Items to one JSON file.
-     */
-    void exportOrdersToJSON() {
-        ExportFile ef = new ExportFile();
-        ef.exportOrdersToJSON(incomingOrders, startedOrders, completedOrders);
-    }
-
-    /**
-     * Returns the Incoming Orders Arraylist of unstarted orders
-     * @return ArrayList<Order> incomingOrders
-     * @author Tommy Fenske
-     */
-    public List<Order> getIncomingOrders() {
-        return incomingOrders;
-    }
-
-    /**
-     * Returns the Started Orders Arraylist of started but uncompleted orders
-     * @return ArrayList<Order> startedOrders
-     * @author Tommy Fenske
-     */
-    public List<Order> getStartedOrders() {
-        return startedOrders;
-    }
-
-    /**
-     * Returns the Started Orders Arraylist of completed orders
-     * @return ArrayList<Order> completedOrders
-     * @author Tommy Fenske
-     */
-    public List<Order> getCompletedOrders() {
-        return completedOrders;
+         */
     }
 
     /**
      * Prints each Order object in incomingOrders ArrayList
+     *
      * @return void
      * @author Tommy Fenske
      */
@@ -84,6 +53,7 @@ public class OrderManager {
 
     /**
      * Prints each Order object in startedOrders ArrayList
+     *
      * @return void
      * @author Tommy Fenske
      */
@@ -95,6 +65,7 @@ public class OrderManager {
 
     /**
      * Prints each Order object in completedOrders ArrayList
+     *
      * @return void
      * @author Tommy Fenske
      */
@@ -104,35 +75,95 @@ public class OrderManager {
         }
     }
 
+    // Return the list of incoming orders
+    public List<Order> getIncomingOrders() { return incomingOrders; }
+
+    // Return the list of started orders
+    public List<Order> getStartedOrders()  { return startedOrders; }
+    // Return the list of completed orders
+    public List<Order> getCompletedOrders(){ return completedOrders; }
+
+
     /**
-     * TODO: Write the code to fit the below description of the function
      * Searches the incomingOrders List for the orderID,
      * if a matching ID is found, move the order from incomingOrders to startedOrders List and return true
      * if no matching ID is found, return false
      * @return true if ID found, otherwise false
+     * @author Majid Farah
      */
     boolean startOrder(int orderID) {
+        Iterator<Order> iterator = incomingOrders.iterator();
+
+        while (iterator.hasNext()) {
+            Order order = iterator.next();
+            if (order.getOrderID() == orderID) {
+                try {
+                    order.startOrder();
+                } catch (InvalidOrderStatusChange e) {
+                    return false;
+                }
+
+                iterator.remove();
+                startedOrders.add(order);
+                return true;
+            }
+        }
+
         return false;
     }
-
     /**
-     * TODO: Write the code to fit the below description of the function
      * Searches the startedOrders List for the orderID,
      * if a matching ID is found, move the order from startedOrders to completedOrders List and return true
      * if no matching ID is found, return false
+     * @author Majid Farah
      */
     boolean completeOrder(int orderID) {
+        Iterator<Order> iterator = startedOrders.iterator();
+
+        while (iterator.hasNext()) {
+            Order order = iterator.next();
+            if (order.getOrderID() == orderID) {
+                try {
+                    order.closeOrder();
+                } catch (InvalidOrderStatusChange e) {
+                    return false;
+                }
+
+                iterator.remove();
+                completedOrders.add(order);
+                return true;
+            }
+        }
+
         return false;
     }
 
     /**
-     * TODO: Write the code to fit the below description of the function
      * Searches the all Order Lists for the orderID,
+     * Searches all Order Lists for the orderID,
      * if a matching ID is found, return the order
      * if no matching ID is found, return null
+     * @author Majid Farah
      */
     Order getOrder(int orderID) {
+        for (Order order : incomingOrders) {
+            if (order.getOrderID() == orderID) {
+                return order;
+            }
+        }
+
+        for (Order order : startedOrders) {
+            if (order.getOrderID() == orderID) {
+                return order;
+            }
+        }
+
+        for (Order order : completedOrders) {
+            if (order.getOrderID() == orderID) {
+                return order;
+            }
+        }
+
         return null;
     }
-
 }
