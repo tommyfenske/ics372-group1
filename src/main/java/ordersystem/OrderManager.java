@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class OrderManager {
     // How the user interacts with the OrderManager
-    private TerminalInterface terminalInterface;
+    //private TerminalInterface terminalInterface;
 
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
@@ -28,10 +28,8 @@ public class OrderManager {
      */
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
-        // TODO: delete line above and replace with comments below once FileHandler returns ArrayList
         List<Order> newOrders = fh.jsonParsing();
         this.incomingOrders.addAll(newOrders);
-
     }
 
     /**
@@ -42,7 +40,7 @@ public class OrderManager {
      * @author Ruben Vallejo
      */
     public void setTerminalInterface(TerminalInterface terminalInterface){
-        this.terminalInterface = terminalInterface;
+        //this.terminalInterface = terminalInterface;
     }
 
     /**
@@ -53,7 +51,7 @@ public class OrderManager {
      */
     public void printIncomingOrders() {
         //Debug Statement
-        System.out.println("DEBUG: Incoming orders count = " + incomingOrders.size());
+        //System.out.println("DEBUG: Incoming orders count = " + incomingOrders.size());
         for (Order order : incomingOrders) {
             System.out.println(order.toString());
         }

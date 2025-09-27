@@ -50,7 +50,6 @@ public class FileHandler {
 
                         JsonObject readObject = Jreader.readObject();
 
-                        // TODO: currently this only supports one "order" object per file
                         //Professor said for this project this was okay,
                         // Each file will be one "order"
                         JsonObject orderObject = readObject.getJsonObject("order");

@@ -103,7 +103,7 @@ public class TerminalInterface {
     private void jsonInput() {
         System.out.println("JSON Input Started.");
         orderManager.fileFromJSON();
-        System.out.println("JSON Input Finished.");
+        System.out.println("JSON Input Finished.\n");
     }
 
     /**
@@ -111,7 +111,6 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void listOrders() {
-        // TODO: When OrderManager has more functionality, call method to print orders.
         System.out.println("List Orders Started.");
 
         System.out.println("Incoming Orders: ");
@@ -126,7 +125,7 @@ public class TerminalInterface {
         orderManager.printCompletedOrders();
         System.out.println();
 
-        System.out.println("List Orders Finished.");
+        System.out.println("List Orders Finished.\n");
     }
 
     /**
@@ -234,7 +233,7 @@ public class TerminalInterface {
                 break;
         }
 
-        System.out.println("Manipulate Orders Finished.");
+        System.out.println("Manipulate Orders Finished.\n");
     }
 
     /**
@@ -245,7 +244,7 @@ public class TerminalInterface {
         // TODO: When FileExport class is added, call method to export current orders from OrderManager class.
         System.out.println("Export Orders Started.");
         // orderManager.exportOrdersToJSON();
-        System.out.println("Export Orders Finished.");
+        System.out.println("Export Orders Finished.\n");
     }
 
     /**
