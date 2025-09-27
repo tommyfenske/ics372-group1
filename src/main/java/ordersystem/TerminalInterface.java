@@ -8,23 +8,9 @@ import ordersystem.OrderManager;
 /**
  * Used to interface with the user using the terminal.
  * The TerminalInterface should create FileHandlers as needed,
- * and call methods from the OrderManager class.
+ * and call methods to it's OrderManager instance.
  * @author Tommy Fenske
- *
- *
- * What the interface needs to do:
- * 1. Import orders from JSON
- *      Start a new FileHandler instance
- *
- * 2. List orders
- *
- * 3. Manipulate current orders
- *      Start an order, display an order, complete an order
- *
- * 4. Export orders to
- *
- * 5. Exit program
- */
+*/
 
 public class TerminalInterface {
     private boolean exitProgram = false;
@@ -55,7 +41,6 @@ public class TerminalInterface {
 
     /**
      * Prints general commands available to the user, and gets input on what command to run.
-     * @return void
      * @author Tommy Fenske
      */
     public void getCommand() {
@@ -281,7 +266,6 @@ public class TerminalInterface {
 
     /**
      * Prints a line of spaced out stars to make the program look nice.
-     * @return void
      * @author Tommy Fenske
      */
     private void printStars() {

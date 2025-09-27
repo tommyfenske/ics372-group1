@@ -22,8 +22,6 @@ public class OrderManager {
     /**
      * Instantiates the FileHandler class which returns an ArrayList of Orders.
      * Then adds each of the returned Orders to the incomingOrders ArrayList.
-     *
-     * @return void
      * @author Tommy Fenske
      */
     void fileFromJSON() {
@@ -45,8 +43,6 @@ public class OrderManager {
 
     /**
      * Prints each Order object in incomingOrders ArrayList
-     *
-     * @return void
      * @author Tommy Fenske
      */
     public void printIncomingOrders() {
@@ -59,8 +55,6 @@ public class OrderManager {
 
     /**
      * Prints each Order object in startedOrders ArrayList
-     *
-     * @return void
      * @author Tommy Fenske
      */
     public void printStartedOrders() {
@@ -71,8 +65,6 @@ public class OrderManager {
 
     /**
      * Prints each Order object in completedOrders ArrayList
-     *
-     * @return void
      * @author Tommy Fenske
      */
     public void printCompletedOrders() {
