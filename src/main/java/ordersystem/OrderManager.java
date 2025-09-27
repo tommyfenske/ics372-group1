@@ -28,14 +28,10 @@ public class OrderManager {
      */
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
-        fh.jsonParsing();
         // TODO: delete line above and replace with comments below once FileHandler returns ArrayList
-        //ArrayList<Order> newOrders = fh.jsonParsing();
-        /*
-        for (Order order : newOrders) {
-            incomingOrders.add(order);
-        }
-         */
+        List<Order> newOrders = fh.jsonParsing();
+        this.incomingOrders.addAll(newOrders);
+
     }
 
     /**
@@ -56,6 +52,8 @@ public class OrderManager {
      * @author Tommy Fenske
      */
     public void printIncomingOrders() {
+        //Debug Statement
+        System.out.println("DEBUG: Incoming orders count = " + incomingOrders.size());
         for (Order order : incomingOrders) {
             System.out.println(order.toString());
         }

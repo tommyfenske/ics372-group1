@@ -93,6 +93,17 @@ public class FileHandler {
 
     private static File[] fileFinder() {
 
+        /*
+          Adding some extra Java swing, JFrame logic to force our popup
+          window to the front of whatever is going on
+         */
+        JFrame ourFrame = new JFrame();
+
+        ourFrame.setAlwaysOnTop(true);
+        ourFrame.setLocationRelativeTo(null);
+        ourFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+
 
         JFileChooser myChooser = new JFileChooser();
 
@@ -102,7 +113,7 @@ public class FileHandler {
         //Makes it easy to handle only JSON files
         myChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("JSON Files", "json"));
 
-        int result = myChooser.showOpenDialog(null);
+        int result = myChooser.showOpenDialog(ourFrame);
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
@@ -121,6 +132,7 @@ public class FileHandler {
 
                 }
             }
+            ourFrame.dispose();
             return myFileArray;
         }
 
