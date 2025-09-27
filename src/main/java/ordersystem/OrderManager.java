@@ -14,7 +14,6 @@ public class OrderManager {
     private List<Order> completedOrders;
 
     public OrderManager() {
-        terminalInterface = new TerminalInterface();
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
@@ -37,6 +36,17 @@ public class OrderManager {
             incomingOrders.add(order);
         }
          */
+    }
+
+    /**
+     *
+     * This setter is needed to link TerminalInterface, it was breaking our
+     * code when we had it set as an object and then referencing it back in
+     * the Terminal Interface class
+     * @author Ruben Vallejo
+     */
+    public void setTerminalInterface(TerminalInterface terminalInterface){
+        this.terminalInterface = terminalInterface;
     }
 
     /**

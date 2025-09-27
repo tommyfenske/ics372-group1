@@ -36,6 +36,9 @@ public class TerminalInterface {
      * until the user is done with the program.
      * @author Tommy Fenske
      */
+
+    //Updating so OrderManager Object is passed through TerminalInterface class
+    //Fixing the stackOverflow issue
     public TerminalInterface() {
         orderManager = new OrderManager();
 
