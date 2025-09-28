@@ -1,0 +1,18 @@
+{
+  "order": {
+    "type": "pickup",
+    "order_date": 1618329000123,
+    "items": [
+      {
+        "name": "Pizza",
+        "quantity": 1,
+        "price": 12.5
+      },
+      {
+        "name": "Soda",
+        "quantity": 3,
+        "price": 1.99
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "order": {
+    "type": "togo",
+    "order_date": 1622457600456,
+    "items": [
+      {
+        "name": "Salad",
+        "quantity": 2,
+        "price": 6.25
+      },
+      {
+        "name": "Soup",
+        "quantity": 1,
+        "price": 4.5
+      },
+      {
+        "name": "Breadsticks",
+        "quantity": 6,
+        "price": 0.99
+      }
+    ]
+  }
+}

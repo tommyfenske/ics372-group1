@@ -1,0 +1,28 @@
+{
+  "order": {
+    "type": "togo",
+    "order_date": 1648324800123,
+    "items": [
+      {
+        "name": "Coffee",
+        "quantity": 2,
+        "price": 3.25
+      },
+      {
+        "name": "Bagel",
+        "quantity": 4,
+        "price": 2.5
+      },
+      {
+        "name": "Cream Cheese",
+        "quantity": 1,
+        "price": 1.25
+      },
+      {
+        "name": "Muffin",
+        "quantity": 3,
+        "price": 2.75
+      }
+    ]
+  }
+}
