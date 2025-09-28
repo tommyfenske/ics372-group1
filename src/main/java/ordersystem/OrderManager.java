@@ -164,4 +164,15 @@ public class OrderManager {
 
         return null;
     }
+
+    /**
+     * Calling our FileExport to be used by the user to export the orders
+     * into one Json file
+     */
+
+    private  void fileExport(){
+        ExportFile fileToExport = new ExportFile();
+        fileToExport.exportOrdersToJSON(this.getIncomingOrders(),
+                this.getStartedOrders(),this.getCompletedOrders());
+    }
 }
