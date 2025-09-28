@@ -65,6 +65,10 @@ public class Order {
 
     }
 
+    public List<Item> getItems() {
+        return this.items;
+    }
+
     // Throws InvalidOrderStatusChange when attempting to close an already closed or incomplete order.
     public void closeOrder() throws InvalidOrderStatusChange {
         if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Incomplete")) {
