@@ -226,9 +226,13 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     private void exportOrders() {
-        // TODO: When FileExport class is added, call method to export current orders from OrderManager class.
         System.out.println("Export Orders Started.");
-        // orderManager.exportOrdersToJSON();
+        ExportFile exporter = new ExportFile();
+        exporter.exportOrdersToJSON(
+                orderManager.getIncomingOrders(),
+                orderManager.getStartedOrders(),
+                orderManager.getCompletedOrders()
+        );
         System.out.println("Export Orders Finished.\n");
     }
 
