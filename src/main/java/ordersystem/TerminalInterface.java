@@ -3,7 +3,6 @@ package ordersystem;
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
-import ordersystem.OrderManager;
 
 /**
  * Used to interface with the user using the terminal.
