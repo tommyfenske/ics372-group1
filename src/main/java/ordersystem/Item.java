@@ -40,6 +40,7 @@ public class Item {
         this.quantity = quantity;
     }
 
+    // Overrides the format of toString() to be compatible with this Item class.
     @Override
     public String toString() {
         return String.format("Item: %s, Price: %.2f, Quantity %d", name, price, quantity);
