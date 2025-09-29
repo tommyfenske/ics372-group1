@@ -171,7 +171,7 @@ public class OrderManager {
      * @author Ruben Vallejo
      */
 
-    private  void fileExport(){
+    public void fileExport(){
         ExportFile fileToExport = new ExportFile();
         fileToExport.exportOrdersToJSON(this.getIncomingOrders(),
                 this.getStartedOrders(),this.getCompletedOrders());

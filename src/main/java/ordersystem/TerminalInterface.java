@@ -43,7 +43,7 @@ public class TerminalInterface {
      * Prints general commands available to the user, and gets input on what command to run.
      * @author Tommy Fenske
      */
-    public void getCommand() {
+    private void getCommand() {
         // Output list of commands
         printStars();
         System.out.println("Commands:");
@@ -82,7 +82,7 @@ public class TerminalInterface {
     }
 
     /**
-     * Instantiates FileHandler class to get list of Orders, and passes them to OrderManager.
+     * Calls fileFromJSON method in OrderManager
      * @author Tommy Fenske
      */
     private void jsonInput() {
@@ -222,17 +222,12 @@ public class TerminalInterface {
     }
 
     /**
-     * Connects to ? class to export current orders into a JSON file.
+     * Calls orderManager method fileExport to export orders to JSON
      * @author Tommy Fenske
      */
     private void exportOrders() {
         System.out.println("Export Orders Started.");
-        ExportFile exporter = new ExportFile();
-        exporter.exportOrdersToJSON(
-                orderManager.getIncomingOrders(),
-                orderManager.getStartedOrders(),
-                orderManager.getCompletedOrders()
-        );
+        orderManager.fileExport();
         System.out.println("Export Orders Finished.\n");
     }
 
