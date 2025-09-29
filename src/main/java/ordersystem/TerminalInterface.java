@@ -21,9 +21,6 @@ public class TerminalInterface {
      * until the user is done with the program.
      * @author Tommy Fenske
      */
-
-    //Updating so OrderManager Object is passed through TerminalInterface class
-    //Fixing the stackOverflow issue
     public TerminalInterface() {
         orderManager = new OrderManager();
 
@@ -71,10 +68,10 @@ public class TerminalInterface {
             case 4: // EXPORT TO JSON FILE
                 exportOrders();
                 break;
-            case 5:
+            case 5: // EXIT PROGRAM
                 exit();
                 break;
-            default:
+            default: // Command not recognized
                 System.out.println("Invalid Command.");
                 break;
         }
@@ -148,21 +145,21 @@ public class TerminalInterface {
                     System.out.println("NO INCOMING ORDERS");
                     printStars();
                     break;
-                } else {
+                } else { // if incoming orders, print each one, then get ID from user
                     for (Order o :  incoming) {
                         System.out.println(o);
                     }
                     printStars();
                     id = getIDInput();
-                    result = orderManager.startOrder(id);
+                    result = orderManager.startOrder(id); // Call start method
                     if (!result) {
                         System.out.printf("No order matches the ID: %d\n", id);
                     } else {
                         System.out.printf("Order ID: %d has been started.\n", id);
                     }
                 }
-
                 break;
+
             case 2: // DISPLAY ORDER
                 // Print all orders
                 printStars();
@@ -186,6 +183,7 @@ public class TerminalInterface {
                     printStars();
                 }
                 break;
+
             case 3: // COMPLETE ORDER
                 List<Order> started = orderManager.getStartedOrders();
 
@@ -196,13 +194,13 @@ public class TerminalInterface {
                     System.out.println("NO STARTED ORDERS");
                     printStars();
                     break;
-                } else {
+                } else { // if incoming orders, print each, then get ID from user
                     for (Order o :  started) {
                         System.out.println(o);
                     }
                     printStars();
                     id = getIDInput();
-                    result = orderManager.completeOrder(id);
+                    result = orderManager.completeOrder(id); // Call complete method
                     if (!result) {
                         System.out.printf("No order matches the ID: %d\n", id);
                     } else {
