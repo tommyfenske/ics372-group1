@@ -45,6 +45,7 @@ public class Order {
         return this.status;
     }
 
+    // Returns the price, quantity, and name of each item in the terminal. It then adds the prices to display the total.
     public void getOrderDetails() {
         double sum = 0;
 
@@ -55,6 +56,7 @@ public class Order {
         System.out.println("\nTOTAL: " + sum);
     }
 
+    // Changes order status to "Started".
     // Throws InvalidOrderStatusChange when attempting to start an already started or closed order.
     public void startOrder() throws InvalidOrderStatusChange {
         if (this.status.equalsIgnoreCase("Started") || this.status.equalsIgnoreCase("Closed")) {
@@ -69,6 +71,7 @@ public class Order {
         return this.items;
     }
 
+    // Changes order status to "Closed".
     // Throws InvalidOrderStatusChange when attempting to close an already closed or incomplete order.
     public void closeOrder() throws InvalidOrderStatusChange {
         if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Incomplete")) {
@@ -88,6 +91,7 @@ public class Order {
         return String.format("Order ID: %d, Type: %s, Status: %s, Item Qty: %d", this.orderID, this.orderType, this.status, this.items.size());
     }
 
+    // Returns details of order (similar to getOrderDetails()) except it returns the String of the items to be used in different contexts.
     public String displayOrder() {
         String handler = toString();
 

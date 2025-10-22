@@ -1,6 +1,11 @@
 # ICS 372 Object Oriented Design and Implementation Group Project
 ### Contributors: Jordan Curtis, Majid Farah, Tommy Fenske, Ruben Vallejo, Kheder Yusuf
 
+### Class Diagram
+![class diagram](class_diagram.jpeg)
+### Sequence Diagram
+![sequence_diagram](sequence-diagram.jpeg)
+
 ## Project Instructions:
 Your assignment is to design and build a tracking system for a restaurant that receives online orders
 through a 3rd party (FoodHub). Restaurant staff will need to be able to add orders that arrive, start orders
