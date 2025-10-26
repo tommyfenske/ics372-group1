@@ -8,7 +8,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 
@@ -19,8 +18,10 @@ import java.util.List;
  * @author Ruben
  */
 
-public class GUI extends Application implements OrderInterface{
+public class GUI extends Application {
 
+    //Private GUIController object for functionality
+    private final GUIController guiController = new GUIController(this);
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -60,24 +61,17 @@ public class GUI extends Application implements OrderInterface{
         return outputSection;
     }
 
-
-    //Private order manager object for functionality
-
-    private final OrderManager uiOrderManager = new OrderManager();
-
     @Override
     public void start(Stage stage) throws Exception {
 
 
         //Hooking things up
-
-        importJsonButton.setOnAction(e -> jsonInput());
-        loadOrdersButton.setOnAction(e -> listOrders());
-        startOrderButton.setOnAction(e -> manipulateOrders("Start Order"));
-        completeOrderButton.setOnAction(e -> manipulateOrders("Complete Order"));
-        getOrderButton.setOnAction(e -> manipulateOrders("Get Order"));
-        showOrdersButton.setOnAction(e -> listOrders());
-
+        importJsonButton.setOnAction(e -> guiController.importJsonButtonPressed() );
+        loadOrdersButton.setOnAction(e -> guiController.loadOrdersButtonPressed() );
+        startOrderButton.setOnAction(e -> guiController.startOrderButtonPressed() );
+        completeOrderButton.setOnAction(e -> guiController.completeOrderButtonPressed() );
+        getOrderButton.setOnAction(e -> guiController.getOrderButtonPressed() );
+        showOrdersButton.setOnAction(e -> guiController.showOrdersButtonPressed());
 
 
         VBox rootLayout = new VBox(20, headerLabel, topControls(), orderControls(), outputContent());
@@ -95,20 +89,17 @@ public class GUI extends Application implements OrderInterface{
 
     //TODO Finish implementing all logic for buttons and labels to make it complete
 
-
-    @Override
     public void listOrders() {
 
-        List<Order> startedOrders = uiOrderManager.getStartedOrders();
+        //List<Order> startedOrders = uiOrderManager.getStartedOrders();
 
-        List<Order> incomingOrders = uiOrderManager.getIncomingOrders();
+        //List<Order> incomingOrders = uiOrderManager.getIncomingOrders();
 
-        List<Order> completedOrders = uiOrderManager.getCompletedOrders();
+        //List<Order> completedOrders = uiOrderManager.getCompletedOrders();
 
 
     }
 
-    @Override
     public void manipulateOrders(String userAction) {
 
         switch (userAction){
@@ -128,21 +119,18 @@ public class GUI extends Application implements OrderInterface{
 
     }
 
-    @Override
     public void exportOrders() {
 
         outputLabel.setText("Exporting....");
 
     }
 
-    @Override
     public void exit() {
 
         outputLabel.setText("Now Exiting");
 
     }
 
-    @Override
     public void jsonInput() {
 
         outputLabel.setText("Importing....");

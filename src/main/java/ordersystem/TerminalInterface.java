@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class TerminalInterface {
     private boolean exitProgram = false;
     private final Scanner myScan = new Scanner(System.in);
-    private OrderManager orderManager;
+    private final OrderManager orderManager;
 
     /**
      * Constructor function that introduces the program and then starts the command loop
@@ -22,7 +22,7 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     public TerminalInterface() {
-        orderManager = new OrderManager();
+        orderManager = new OrderManager(new GUIController(new GUI()));
 
         printStars();
         System.out.println("\nRestaurant Order Tracking System");

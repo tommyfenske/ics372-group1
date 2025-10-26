@@ -7,13 +7,16 @@ import java.util.*;
  */
 public class OrderManager {
     // How the user interacts with the OrderManager
-    //private TerminalInterface terminalInterface;
+
+    private final GUIController guiController;
 
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
     private List<Order> completedOrders;
 
-    public OrderManager() {
+    public OrderManager(GUIController controller) {
+        guiController = controller;
+
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
