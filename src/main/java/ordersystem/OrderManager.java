@@ -6,7 +6,6 @@ import java.util.*;
  * This class handles all of the orders, started, incompleted and completed
  */
 public class OrderManager {
-    // How the user interacts with the OrderManager
 
     private final GUIController guiController;
 
@@ -31,6 +30,9 @@ public class OrderManager {
         FileHandler fh = new FileHandler();
         List<Order> newOrders = fh.jsonParsing();
         this.incomingOrders.addAll(newOrders);
+
+        // Update GUI after new orders have been added
+        guiController.updateGUIOrders();
     }
 
     /**

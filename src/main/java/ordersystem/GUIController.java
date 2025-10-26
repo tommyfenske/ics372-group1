@@ -17,8 +17,9 @@ public class GUIController {
     }
 
     public void importJsonButtonPressed() {
-        // TODO: change button name to "Import Orders Button"
+        // TODO: change button name to "Import Orders Button", since we can import XML too?
         System.out.println("Import JSON Button Pressed.");
+        gui.outputLabel.setText("Importing....");
 
         // TODO: connect this method to the File facade class we create later
         orderManager.fileFromJSON();
@@ -26,12 +27,20 @@ public class GUIController {
 
     public void loadOrdersButtonPressed() {
         System.out.println("Load Orders Button Pressed.");
+        gui.outputLabel.setText("Loading....");
     }
 
     public void startOrderButtonPressed() {
         System.out.println("Start Order Button Pressed.");
 
         // TODO: should this call a method in GUI class to update the text instead?
+        /* For example:
+
+            gui.updateOrderStatusLabel("Order Started Placeholder");
+
+        This way the gui class is responsible for changes to its own elements.
+        Is this better or just extra work?
+         */
         gui.orderStatusLabel.setText("Order Started Placeholder");
     }
 
@@ -56,5 +65,16 @@ public class GUIController {
         orderManager.printCompletedOrders();
 
         // TODO: Once the GUI displays orders, we shouldn't need this method any longer since Orders should be displayed automatically
+    }
+
+    /**
+     *  This method should be called by the OrderManager after orders are added or changed.
+     *  Contains pseudocode for now.
+     */
+    public void updateGUIOrders() {
+        // for each order in the order manager,
+            // create a corresponding label and add it to the appropriate GUI list element
+
+        System.out.println("Update GUI Orders.");
     }
 }
