@@ -2,6 +2,10 @@ package ordersystem;
 
 import java.util.*;
 
+import javafx.application.Platform;
+import java.io.File;
+import java.nio.file.*;
+
 /**
  * This class handles all of the orders, started, incompleted and completed
  */
@@ -19,6 +23,8 @@ public class OrderManager {
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
+
+        setupWatcher();
     }
 
     /**
@@ -180,5 +186,38 @@ public class OrderManager {
         ExportFile fileToExport = new ExportFile();
         fileToExport.exportOrdersToJSON(this.getIncomingOrders(),
                 this.getStartedOrders(),this.getCompletedOrders());
+    }
+
+    public static void setupWatcher() {
+        Thread t = new Thread(() -> {
+            File dataDir = new File("data");
+
+            while(true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                Platform.runLater(() -> {
+                    // TODO: handle null pointer exception
+                    for (String s : dataDir.list()) {
+                        System.out.println(s);
+                        // Get reference to individual file
+                        File currentFile = new File( dataDir.getPath() + "/" + s);
+
+                        // TODO: Code for sending file to the FileHandler will go here
+
+                        // Delete file
+                        if (currentFile.delete()) {
+                            System.out.println("Deleted the file: " + currentFile.getName());
+                        } else {
+                            System.out.println("Failed to delete the file: " + currentFile.getName());
+                        }
+                    }
+                });
+            }
+        });
+        t.setName("Polling Thread");
+        t.start();
     }
 }
