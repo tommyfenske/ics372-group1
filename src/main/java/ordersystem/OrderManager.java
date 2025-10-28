@@ -7,11 +7,12 @@ import java.io.File;
 import java.nio.file.*;
 
 /**
- * This class handles all of the orders, started, incompleted and completed
+ * This class handles all the orders: incoming, started, and completed
  */
 public class OrderManager {
 
     private final GUIController guiController;
+    private static boolean pollDirectory = true;
 
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
@@ -192,7 +193,8 @@ public class OrderManager {
         Thread t = new Thread(() -> {
             File dataDir = new File("data");
 
-            while(true) {
+            // TODO: change "true" to a variable, so the user can toggle whether polling is active?
+            while(pollDirectory) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
