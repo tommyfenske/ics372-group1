@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Program Started.");
 
-        Application.launch(GUI.class, args);
+        Application.launch(GUIController.class, args);
 
         //TerminalInterface terminalInterface = new TerminalInterface();
 

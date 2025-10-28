@@ -11,22 +11,13 @@ import java.nio.file.*;
  */
 public class OrderManager {
 
-    private final GUIController guiController;
     private static boolean pollDirectory = true;
 
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
     private List<Order> completedOrders;
 
-    public OrderManager(GUIController controller) {
-        guiController = controller;
 
-        incomingOrders = new ArrayList<Order>();
-        startedOrders = new ArrayList<Order>();
-        completedOrders = new ArrayList<Order>();
-
-        setupWatcher();
-    }
 
     /**
      * Instantiates the FileHandler class which returns an ArrayList of Orders.
@@ -38,8 +29,8 @@ public class OrderManager {
         List<Order> newOrders = fh.jsonParsing();
         this.incomingOrders.addAll(newOrders);
 
-        // Update GUI after new orders have been added
-        guiController.updateGUIOrders();
+        // Update GUIController after new orders have been added
+
     }
 
     /**

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="75" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ordersystem.GUIController">
+
+    <Label fx:id="orderStatusLabel" text="Placeholder" style="-fx-font-size: 18px"/>
+    <Label fx:id="headerLabel" text="Welcome to the Order System!" style="-fx-font-size: 18px"/>
+    <Label fx:id="outputLabel" text="Placeholder" style="-fx-font-size: 18px"/>
+
+<!--Top control bar -->
+
+<HBox alignment="CENTER" spacing="30">
+    <Button fx:id="importJsonButton" onAction="#jsonInput" text="Import File" />
+    <Button fx:id="loadOrderButton" onAction="#listOrders" text="Load Orders" />
+    <Button fx:id="exportJsonButton" onAction="#exportOrders" text="Import File" />
+</HBox>
+   <HBox prefHeight="100.0" prefWidth="200.0" />
+   <HBox prefHeight="100.0" prefWidth="200.0" />
+
+</VBox>
