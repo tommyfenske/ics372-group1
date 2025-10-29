@@ -14,9 +14,9 @@ public class OrderManager {
     private static GUIController guiController;
     private static boolean pollDirectory = true;
 
-    private List<Order> incomingOrders;
-    private List<Order> startedOrders;
-    private List<Order> completedOrders;
+    private static List<Order> incomingOrders;
+    private static List<Order> startedOrders;
+    private static List<Order> completedOrders;
 
     public OrderManager(GUIController controller) {
         guiController = controller;
@@ -36,7 +36,7 @@ public class OrderManager {
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
         List<Order> newOrders = fh.jsonParsing();
-        this.incomingOrders.addAll(newOrders);
+        incomingOrders.addAll(newOrders);
 
         // Update GUIController after new orders have been added
 
@@ -195,15 +195,15 @@ public class OrderManager {
 
             while(pollDirectory) {
                 try {
-                    //System.out.println("Sleep");
+                    System.out.println("Sleep");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
-                    //System.out.println("Poll");
+                    System.out.println("Poll");
                     for (String s : dataDir.list()) {
-                        // TODO: handle null pointer exception
+                        // TODO: handle null pointer exception? Might cause a bug
                         System.out.println(s);
                         // Get reference to individual file
                         File currentFile = new File( dataDir.getPath() + "/" + s);
@@ -223,5 +223,9 @@ public class OrderManager {
         });
         t.setName("Polling Thread");
         t.start();
+    }
+
+    public void stopWatcher() {
+        pollDirectory = false;
     }
 }

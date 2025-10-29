@@ -63,6 +63,12 @@ public class GUIController extends Application {
         OrderManager.setupWatcher();
     }
 
+    @Override
+    public void stop() throws Exception {
+        orderManager.stopWatcher();
+        System.exit(0); // To stop Thread from running after Window closes
+    }
+
 
     /**
      * All control functions should go below this comment
