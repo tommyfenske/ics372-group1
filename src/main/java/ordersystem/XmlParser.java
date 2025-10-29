@@ -59,7 +59,7 @@ public class XmlParser {
         try {
             Order order = xmlParsing();
         } catch (Exception e) {
-            System.out.println("Error occurred: Parsing failed due to incorrect formatting.");
+            System.out.println("Error occurred: Parsing failed.");
         }
     }
 
