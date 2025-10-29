@@ -15,11 +15,15 @@
     <Button fx:id="importButton" onAction="#importOrders" text="Import File" />
     <Button fx:id="exportButton" onAction="#exportOrders" text="Export File" />
     <Button fx:id="loadOrderButton" onAction="#listOrders" text="Load Orders" />
+    <Button fx:id="startOrderButton" onAction="#startOrder" text="Start Order" />
     <Button fx:id="completeOrderButton" onAction="#exportOrders" text="Complete Order" />
     <Button fx:id="cancelOrderButton" onAction="#listOrders" text="Cancel Order" />
     <Button fx:id="exitButton" onAction="#stop" text="Exit Program" />
 </HBox>
 
+    <!--
+    <Label fx:id="selectedOrderDisplayLabel" style="-fx-font-size: 18px" text="Placeholder" />
+    -->
 
     <HBox alignment="CENTER" spacing="30">
         <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="294.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />

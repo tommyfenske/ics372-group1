@@ -240,13 +240,13 @@ public class OrderManager {
 
             while(pollDirectory) {
                 try {
-                    System.out.println("Sleep");
+                    //System.out.println("Sleep");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
-                    System.out.println("Poll");
+                    //System.out.println("Poll");
                     for (String s : dataDir.list()) {
                         // TODO: handle null pointer exception? Might cause a bug
                         System.out.println(s);
@@ -254,6 +254,8 @@ public class OrderManager {
                         File currentFile = new File( dataDir.getPath() + "/" + s);
 
                         // TODO: Code for sending file to the FileHandler will go here
+                        //Get Order List from FileHandler
+                        //incomingOrders.addAll(orders);
                         guiController.addIncomingOrders();
 
                         // Delete file
