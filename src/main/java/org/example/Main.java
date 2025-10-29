@@ -1,6 +1,9 @@
 package org.example;
 import javafx.application.Application;
+import javafx.application.Platform;
 import ordersystem.*;
+
+import java.io.File;
 
 //Imports for fx
 
@@ -9,26 +12,11 @@ import ordersystem.*;
 
 
 public class Main {
+
     public static void main(String[] args) {
         System.out.println("Program Started.");
 
         Application.launch(GUIController.class, args);
-
-        //TerminalInterface terminalInterface = new TerminalInterface();
-
-
-
-
-
-        //Starting the stage for javaFX
-
-
-        //orderManager.setTerminalInterface(terminalInterface);
-
-        //ExportFile exporter = new ExportFile(orderManager);
-
-        // Test if ExportFile can talk to OrderManager
-        //exporter.testConnection();
-
     }
+
 }

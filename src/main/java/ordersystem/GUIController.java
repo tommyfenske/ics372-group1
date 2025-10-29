@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -24,7 +25,7 @@ import java.util.*;
 
 public class GUIController extends Application {
 
-    private OrderManager orderManager = new OrderManager(this);
+    private static OrderManager orderManager;
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -42,10 +43,13 @@ public class GUIController extends Application {
     @FXML private Label headerLabel;
     @FXML private Label outputLabel;
 
-    @FXML VBox incomingOrderList;
-    @FXML VBox startedOrderList;
-    @FXML VBox completedOrderList;
+    @FXML private VBox incomingOrderList;
+    @FXML private VBox startedOrderList;
+    @FXML private VBox completedOrderList;
 
+    public GUIController() {
+       orderManager = new OrderManager(this);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -56,6 +60,7 @@ public class GUIController extends Application {
         stage.setTitle("Order System GUIController");
         stage.show();
 
+        OrderManager.setupWatcher();
     }
 
 
@@ -84,8 +89,9 @@ public class GUIController extends Application {
     }
 
     @FXML
-    public void addIncomingOrders() {
+    public void addIncomingOrders() throws NullPointerException {
         List<Item> testList = new ArrayList<>();
+
         incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
     }
 
