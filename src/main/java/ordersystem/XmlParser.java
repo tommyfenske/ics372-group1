@@ -31,7 +31,7 @@ public class XmlParser {
         // String orderID = orderElement.getAttribute("type");
         String orderType = orderElement.getElementsByTagName("OrderType").item(0).getTextContent();
 
-        // Setting up traversal for the XML file for the Item data.
+        // Setting up traversal for the Item data.
         List<Item> orderItems = new ArrayList<>();
         NodeList itemList = document.getElementsByTagName("Item");
 
