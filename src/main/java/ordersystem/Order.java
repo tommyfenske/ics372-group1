@@ -66,6 +66,17 @@ public class Order {
         this.status = "Started";
 
     }
+    // Changes order status to "Cancelled".
+    // Throws InvalidOrderStatusChange when attempting to cancel an already closed or cancelled order.
+    public void cancelOrder() throws InvalidOrderStatusChange {
+        if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Cancelled")) {
+            throw new InvalidOrderStatusChange("Order has already been closed or cancelled.");
+        }
+
+        this.closeTime = LocalDateTime.now();
+        this.status = "Cancelled";
+    }
+
 
     public List<Item> getItems() {
         return this.items;
