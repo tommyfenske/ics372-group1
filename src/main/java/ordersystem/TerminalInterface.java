@@ -22,7 +22,7 @@ public class TerminalInterface {
      * @author Tommy Fenske
      */
     public TerminalInterface() {
-        orderManager = new OrderManager();
+        orderManager = new OrderManager(new GUIController());
 
         printStars();
         System.out.println("\nRestaurant Order Tracking System");

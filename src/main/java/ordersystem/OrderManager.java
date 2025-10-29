@@ -11,13 +11,22 @@ import java.nio.file.*;
  */
 public class OrderManager {
 
+    private final GUIController guiController;
     private static boolean pollDirectory = true;
 
     private List<Order> incomingOrders;
     private List<Order> startedOrders;
     private List<Order> completedOrders;
 
+    public OrderManager(GUIController controller) {
+        guiController = controller;
 
+        incomingOrders = new ArrayList<Order>();
+        startedOrders = new ArrayList<Order>();
+        completedOrders = new ArrayList<Order>();
+
+        setupWatcher(this);
+    }
 
     /**
      * Instantiates the FileHandler class which returns an ArrayList of Orders.
@@ -180,7 +189,7 @@ public class OrderManager {
                 this.getStartedOrders(),this.getCompletedOrders());
     }
 
-    public static void setupWatcher() {
+    public static void setupWatcher(OrderManager orderManager) {
         Thread t = new Thread(() -> {
             File dataDir = new File("data");
 
@@ -199,6 +208,7 @@ public class OrderManager {
                         File currentFile = new File( dataDir.getPath() + "/" + s);
 
                         // TODO: Code for sending file to the FileHandler will go here
+                        orderManager.guiController.addIncomingOrders();
 
                         // Delete file
                         if (currentFile.delete()) {

@@ -6,7 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.*;
 
 
 /**
@@ -21,13 +24,12 @@ import javafx.stage.Stage;
 
 public class GUIController extends Application {
 
+    private OrderManager orderManager = new OrderManager(this);
 
     /**
      * Creating the buttons, labels and components needed to have
      * our GUIController be responsive in the way that we need it to be
      */
-
-
     @FXML private Button importJsonButton;
     @FXML private Button exportJsonButton;
     @FXML private Button loadOrderButton;
@@ -40,7 +42,9 @@ public class GUIController extends Application {
     @FXML private Label headerLabel;
     @FXML private Label outputLabel;
 
-
+    @FXML VBox incomingOrderList;
+    @FXML VBox startedOrderList;
+    @FXML VBox completedOrderList;
 
 
     @Override
@@ -77,6 +81,17 @@ public class GUIController extends Application {
     public void listOrders(){
         outputLabel.setText("Loading/Listing...");
 
+    }
+
+    @FXML
+    public void addIncomingOrders() {
+        List<Item> testList = new ArrayList<>();
+        incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
+    }
+
+    private Label labelFromOrder(Order order) {
+        Label myLabel = new Label(order.toString());
+        return myLabel;
     }
 
 
