@@ -1,15 +1,17 @@
 package ordersystem;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 
@@ -31,13 +33,16 @@ public class GUIController extends Application {
      * Creating the buttons, labels and components needed to have
      * our GUIController be responsive in the way that we need it to be
      */
-    @FXML private Button importJsonButton;
-    @FXML private Button exportJsonButton;
+    @FXML private Button importButton;
+    @FXML private Button exportButton;
     @FXML private Button loadOrderButton;
     @FXML private Button startOrderButton;
     @FXML private Button completeOrderButton;
     @FXML private Button getOrderButton;
     @FXML private Button showOrderButton;
+    @FXML private Button cancelOrderButton;
+
+    @FXML private Button exitButton;
 
     @FXML private Label orderStatusLabel;
     @FXML private Label headerLabel;
@@ -65,8 +70,36 @@ public class GUIController extends Application {
 
     @Override
     public void stop() throws Exception {
-        orderManager.stopWatcher();
-        System.exit(0); // To stop Thread from running after Window closes
+
+        //Adding popups for confirming exit
+
+        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        exitAlert.setTitle("Confirming Exit");
+        exitAlert.setHeaderText("Are you sure you want to exit the program?");
+        exitAlert.setContentText("Current work will be saved in [placeholder]");
+
+        Optional<ButtonType> userSelection = exitAlert.showAndWait();
+
+        if(userSelection.isPresent() && userSelection.get() == ButtonType.OK){
+            //For debugging
+            System.out.print("Now Exiting Program");
+
+            //User said yes close program
+
+            //Stop the watcher
+            orderManager.stopWatcher();
+
+            Platform.exit();
+            System.exit(0); // To stop Thread from running after Window closes
+        }
+        else {
+            //For debugging
+            System.out.print("Exit Canceled");
+            //User chose to cancel and not close program
+            outputLabel.setText("Exit Canceled");
+        }
+
+
     }
 
 
@@ -77,7 +110,7 @@ public class GUIController extends Application {
     //TODO Finish implementing all the functions needed
 
     @FXML
-    public void jsonInput(){
+    public void importOrders(){
         outputLabel.setText("Importing...");
 
     }
@@ -99,6 +132,11 @@ public class GUIController extends Application {
         List<Item> testList = new ArrayList<>();
 
         incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
+    }
+
+    @FXML public void startOrder(int orderID){
+
+        outputLabel.setText("Order Started...");
     }
 
     /**

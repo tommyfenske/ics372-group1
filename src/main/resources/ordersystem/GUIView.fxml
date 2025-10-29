@@ -3,26 +3,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="35" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ordersystem.GUIController">
+<VBox alignment="CENTER" spacing="35" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersystem.GUIController">
 
-    <Label fx:id="orderStatusLabel" text="Placeholder" style="-fx-font-size: 18px"/>
-    <Label fx:id="headerLabel" text="Welcome to the Order System!" style="-fx-font-size: 18px"/>
-    <Label fx:id="outputLabel" text="Placeholder" style="-fx-font-size: 18px"/>
+    <Label fx:id="orderStatusLabel" style="-fx-font-size: 18px" text="Placeholder" />
+    <Label fx:id="headerLabel" style="-fx-font-size: 18px" text="Welcome to the Order System!" />
+    <Label fx:id="outputLabel" style="-fx-font-size: 18px" text="Placeholder" />
 
 <!--Top control bar -->
 
 <HBox alignment="CENTER" spacing="30">
-    <Button fx:id="importJsonButton" onAction="#jsonInput" text="Import File" />
+    <Button fx:id="importButton" onAction="#importOrders" text="Import File" />
+    <Button fx:id="exportButton" onAction="#exportOrders" text="Export File" />
     <Button fx:id="loadOrderButton" onAction="#listOrders" text="Load Orders" />
-    <Button fx:id="exportJsonButton" onAction="#exportOrders" text="Import File" />
+    <Button fx:id="completeOrderButton" onAction="#exportOrders" text="Complete Order" />
+    <Button fx:id="cancelOrderButton" onAction="#listOrders" text="Cancel Order" />
+    <Button fx:id="exitButton" onAction="#stop" text="Exit Program" />
 </HBox>
 
 
     <HBox alignment="CENTER" spacing="30">
-        <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="300.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;"/>
-        <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="300.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;"/>
-        <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="300.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;"/>
+        <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="294.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+        <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="300.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+        <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="300.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
     </HBox>
 
 </VBox>
