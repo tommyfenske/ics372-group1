@@ -11,13 +11,22 @@ import java.nio.file.*;
  */
 public class OrderManager {
 
+    private static GUIController guiController;
     private static boolean pollDirectory = true;
 
-    private List<Order> incomingOrders;
-    private List<Order> startedOrders;
-    private List<Order> completedOrders;
+    private static List<Order> incomingOrders;
+    private static List<Order> startedOrders;
+    private static List<Order> completedOrders;
 
+    public OrderManager(GUIController controller) {
+        guiController = controller;
 
+        incomingOrders = new ArrayList<Order>();
+        startedOrders = new ArrayList<Order>();
+        completedOrders = new ArrayList<Order>();
+
+        //setupWatcher(this, guiController);
+    }
 
     /**
      * Instantiates the FileHandler class which returns an ArrayList of Orders.
@@ -27,7 +36,7 @@ public class OrderManager {
     void fileFromJSON() {
         FileHandler fh = new FileHandler();
         List<Order> newOrders = fh.jsonParsing();
-        this.incomingOrders.addAll(newOrders);
+        incomingOrders.addAll(newOrders);
 
         // Update GUIController after new orders have been added
 
@@ -184,21 +193,23 @@ public class OrderManager {
         Thread t = new Thread(() -> {
             File dataDir = new File("data");
 
-            // TODO: change "true" to a variable, so the user can toggle whether polling is active?
             while(pollDirectory) {
                 try {
+                    System.out.println("Sleep");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
-                    // TODO: handle null pointer exception
+                    System.out.println("Poll");
                     for (String s : dataDir.list()) {
+                        // TODO: handle null pointer exception? Might cause a bug
                         System.out.println(s);
                         // Get reference to individual file
                         File currentFile = new File( dataDir.getPath() + "/" + s);
 
                         // TODO: Code for sending file to the FileHandler will go here
+                        guiController.addIncomingOrders();
 
                         // Delete file
                         if (currentFile.delete()) {
@@ -212,5 +223,9 @@ public class OrderManager {
         });
         t.setName("Polling Thread");
         t.start();
+    }
+
+    public void stopWatcher() {
+        pollDirectory = false;
     }
 }
