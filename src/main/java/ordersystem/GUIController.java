@@ -130,8 +130,12 @@ public class GUIController extends Application {
     @FXML
     public void addIncomingOrders() throws NullPointerException {
         List<Item> testList = new ArrayList<>();
-
         incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
+        /* Eventually, this method should take in a list of Order objects and add each one
+        for (Order o : orders) {
+            incomingOrderList.getChildren().add( labelFromOrder(o) );
+        }
+        */
     }
 
     @FXML public void startOrder(int orderID){
