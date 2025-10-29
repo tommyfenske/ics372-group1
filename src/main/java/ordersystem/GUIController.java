@@ -89,10 +89,30 @@ public class GUIController extends Application {
         incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
     }
 
+    /**
+     * Method creates and returns a Label object with text from an Order object's data
+     * @param order the Order object to read data from
+     * @return the Label object with text value changed and event listener added
+     */
     private Label labelFromOrder(Order order) {
+        // Create label
         Label myLabel = new Label(order.toString());
+
+        // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
+        myLabel.setOnMouseClicked(event -> {
+            if (event.getSource() instanceof Label) orderLabelClicked( (Label)event.getSource() );
+        });
+
         return myLabel;
     }
 
+    /**
+     * A function to be called whenever a Label that represents on Order has been clicked on by the mouse.
+     * @author Tommy Fenske
+     */
+    private void orderLabelClicked(Label label) {
+        // Temporary code to prove it works
+        System.out.println(label.getText());
+    }
 
 }
