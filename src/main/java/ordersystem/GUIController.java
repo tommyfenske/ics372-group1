@@ -28,6 +28,7 @@ import java.util.*;
 public class GUIController extends Application {
 
     private static OrderManager orderManager;
+    private OrderLabel selectedOrderLabel;
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -43,6 +44,8 @@ public class GUIController extends Application {
     @FXML private Button cancelOrderButton;
 
     @FXML private Button exitButton;
+
+    //@FXML private Label selectedOrderDisplayLabel;
 
     @FXML private Label orderStatusLabel;
     @FXML private Label headerLabel;
@@ -124,8 +127,10 @@ public class GUIController extends Application {
     @FXML
     public void listOrders(){
         outputLabel.setText("Loading/Listing...");
-
     }
+
+    @FXML
+    public void startOrder(){}
 
     @FXML
     public void addIncomingOrders() throws NullPointerException {
@@ -150,11 +155,12 @@ public class GUIController extends Application {
      */
     private Label labelFromOrder(Order order) {
         // Create label
-        Label myLabel = new Label(order.toString());
+        OrderLabel myLabel = new OrderLabel(order);
 
+        myLabel.setUserData(order);
         // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
         myLabel.setOnMouseClicked(event -> {
-            if (event.getSource() instanceof Label) orderLabelClicked( (Label)event.getSource() );
+            if (event.getSource() instanceof OrderLabel) orderLabelClicked( (OrderLabel)event.getSource() );
         });
 
         return myLabel;
@@ -164,9 +170,10 @@ public class GUIController extends Application {
      * A function to be called whenever a Label that represents on Order has been clicked on by the mouse.
      * @author Tommy Fenske
      */
-    private void orderLabelClicked(Label label) {
+    private void orderLabelClicked(OrderLabel label) {
         // Temporary code to prove it works
-        System.out.println(label.getText());
+        System.out.println(label.getOrder().toString());
+        selectedOrderLabel = label;
     }
 
 }
