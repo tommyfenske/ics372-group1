@@ -27,7 +27,7 @@ import java.util.*;
 
 public class GUIController extends Application {
 
-    private static OrderManager orderManager;
+    private final OrderManager orderManager;
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -53,7 +53,7 @@ public class GUIController extends Application {
     @FXML private VBox completedOrderList;
 
     public GUIController() {
-       orderManager = new OrderManager(this);
+       this.orderManager = new OrderManager(this);
     }
 
     @Override
@@ -61,6 +61,18 @@ public class GUIController extends Application {
 
         FXMLLoader sceneLoader = new FXMLLoader(getClass().getResource("GUIView.fxml"));
         Scene scene = new Scene(sceneLoader.load());
+
+        //Getting controller
+        GUIController controller = sceneLoader.getController();
+
+
+        //Adding logic for the close function to fix the bug of the thread staying open
+
+        stage.setOnCloseRequest(event -> {
+            event.consume(); // This stops fx from auto closing
+            exitProgram(stage);
+        });
+
         stage.setScene(scene);
         stage.setTitle("Order System GUIController");
         stage.show();
@@ -70,6 +82,20 @@ public class GUIController extends Application {
 
     @Override
     public void stop() throws Exception {
+
+        orderManager.stopWatcher();
+        Platform.exit();
+        System.exit(0); // To stop Thread from running after Window closes
+
+
+    }
+
+    /**
+     * Defining an actual end program class, to fix the bug of the thread staying open
+     */
+
+    private void exitProgram(Stage exitStage){
+
 
         //Adding popups for confirming exit
 
@@ -87,8 +113,6 @@ public class GUIController extends Application {
             //User said yes close program
 
             //Stop the watcher
-            orderManager.stopWatcher();
-
             Platform.exit();
             System.exit(0); // To stop Thread from running after Window closes
         }
@@ -98,6 +122,7 @@ public class GUIController extends Application {
             //User chose to cancel and not close program
             outputLabel.setText("Exit Canceled");
         }
+
 
 
     }
@@ -131,7 +156,7 @@ public class GUIController extends Application {
     public void addIncomingOrders() throws NullPointerException {
         List<Item> testList = new ArrayList<>();
 
-        incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList) ) );
+        incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList, Order.orderStatus.INCOMING) ) );
     }
 
     @FXML public void startOrder(int orderID){
@@ -165,4 +190,34 @@ public class GUIController extends Application {
         System.out.println(label.getText());
     }
 
+    /**
+     * Adding an update GUI Orders method that will update all the orders
+     * and put them in their perspective boxes based on ENUM type
+     *
+     * @author Ruben
+     *
+     * Call this method anytime there is ANY change to ensure all is updated properly
+     */
+
+    public void updateGUIOrders(){
+
+        incomingOrderList.getChildren().clear();
+        startedOrderList.getChildren().clear();
+        completedOrderList.getChildren().clear();
+
+        for(Order order: orderManager.getIncomingOrders())
+        {
+            incomingOrderList.getChildren().add(labelFromOrder(order));
+        }
+
+        for(Order order: orderManager.getStartedOrders())
+        {
+            startedOrderList.getChildren().add(labelFromOrder(order));
+        }
+
+        for(Order order: orderManager.getCompletedOrders())
+        {
+            completedOrderList.getChildren().add(labelFromOrder(order));
+        }
+    }
 }

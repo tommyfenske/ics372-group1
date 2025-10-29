@@ -12,17 +12,33 @@ public class Order {
     static int latestID = 0;
     private final int orderID = ++latestID;
     private String orderType;
-    private String status = "Incomplete";
+    private orderStatus status = orderStatus.INCOMING;
     private LocalDateTime openTime;
     private LocalDateTime closeTime;
     private List<Item> items = new ArrayList<Item>();
     private double total = 0;
 
+    //Adding an ENUM property
 
-    public Order(String orderType, List<Item> items) {
+    /**
+     * This enum property will allow us to have functionality that will separate the orders based on their type
+     */
+    enum orderStatus{INCOMING,STARTED,COMPLETE,INCOMPLETE,CLOSED,CANCELED}
+
+
+    /**
+     * Constructor for Order class
+     * @param orderType Type of order like pickup, delivery, etc
+     * @param items List of items in the order
+     * @param currentStatus Status of order, like started, completed, etc
+     */
+    public Order(String orderType, List<Item> items, orderStatus currentStatus) {
         this.openTime = LocalDateTime.now();
         this.orderType = orderType;
         this.items = items;
+        this.status = currentStatus;
+
+
 
         for(Item item: items) {
             total += item.getPrice();
@@ -41,7 +57,7 @@ public class Order {
         return this.orderType;
     }
 
-    public String getStatus() {
+    public orderStatus getStatus() {
         return this.status;
     }
 
@@ -59,22 +75,22 @@ public class Order {
     // Changes order status to "Started".
     // Throws InvalidOrderStatusChange when attempting to start an already started or closed order.
     public void startOrder() throws InvalidOrderStatusChange {
-        if (this.status.equalsIgnoreCase("Started") || this.status.equalsIgnoreCase("Closed")) {
+        if (this.status == orderStatus.STARTED || this.status == orderStatus.CLOSED) {
             throw new InvalidOrderStatusChange("Order has already been started.");
         }
 
-        this.status = "Started";
+        this.status = orderStatus.STARTED;
 
     }
     // Changes order status to "Cancelled".
     // Throws InvalidOrderStatusChange when attempting to cancel an already closed or cancelled order.
     public void cancelOrder() throws InvalidOrderStatusChange {
-        if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Cancelled")) {
+        if (this.status == orderStatus.CLOSED || this.status == orderStatus.CANCELED) {
             throw new InvalidOrderStatusChange("Order has already been closed or cancelled.");
         }
 
         this.closeTime = LocalDateTime.now();
-        this.status = "Cancelled";
+        this.status = orderStatus.CANCELED;
     }
 
 
@@ -85,12 +101,23 @@ public class Order {
     // Changes order status to "Closed".
     // Throws InvalidOrderStatusChange when attempting to close an already closed or incomplete order.
     public void closeOrder() throws InvalidOrderStatusChange {
-        if (this.status.equalsIgnoreCase("Closed") || this.status.equalsIgnoreCase("Incomplete")) {
+        if (this.status == orderStatus.CLOSED || this.status == orderStatus.INCOMPLETE) {
             throw new InvalidOrderStatusChange("Order has already been closed.");
         }
 
         this.closeTime = LocalDateTime.now();
-        this.status = "Closed";
+        this.status = orderStatus.CLOSED;
+    }
+
+
+    /**
+     * Marks the order as completed (finished successfully).
+     */
+    public void completeOrder() throws InvalidOrderStatusChange {
+        if (this.status != orderStatus.STARTED) {
+            throw new InvalidOrderStatusChange("Order must be started before it can be completed.");
+        }
+        this.status = orderStatus.COMPLETE;
     }
 
     /**

@@ -48,10 +48,10 @@ public class XmlParser {
             }
         }
 
-        Order testOrder = new Order(orderType, orderItems);
+        Order testOrder = new Order(orderType, orderItems, Order.orderStatus.INCOMING);
         testOrder.getOrderDetails();
 
-        return new Order(orderType, orderItems);
+        return new Order(orderType, orderItems, Order.orderStatus.INCOMING);
 
     }
 

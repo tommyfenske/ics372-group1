@@ -41,7 +41,7 @@ public class FileHandler {
             else {
 
                 for (File singleFile : filesToParse) {
-                    try {
+                        try {
                         JsonReader Jreader =
                                 Json.createReader(new FileReader(singleFile));
 
@@ -73,7 +73,7 @@ public class FileHandler {
                         }
 
                         // Fill Out New Order Object
-                        Order newOrder = new Order(orderType,  orderItems);
+                        Order newOrder = new Order(orderType,  orderItems, Order.orderStatus.INCOMING);
                         ordersToReturn.add(newOrder);
 
                     } catch (Exception e) {
