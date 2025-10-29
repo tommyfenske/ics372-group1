@@ -27,7 +27,7 @@ import java.util.*;
 
 public class GUIController extends Application {
 
-    private final OrderManager orderManager;
+    private static OrderManager orderManager;
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -53,8 +53,9 @@ public class GUIController extends Application {
     @FXML private VBox completedOrderList;
 
     public GUIController() {
-       this.orderManager = new OrderManager(this);
+       orderManager = new OrderManager(this);
     }
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -70,7 +71,7 @@ public class GUIController extends Application {
 
         stage.setOnCloseRequest(event -> {
             event.consume(); // This stops fx from auto closing
-            exitProgram(stage);
+            controller.exitProgram();
         });
 
         stage.setScene(scene);
@@ -80,7 +81,9 @@ public class GUIController extends Application {
         OrderManager.setupWatcher();
     }
 
-    @Override
+
+
+
     public void stop() throws Exception {
 
         orderManager.stopWatcher();
@@ -94,34 +97,35 @@ public class GUIController extends Application {
      * Defining an actual end program class, to fix the bug of the thread staying open
      */
 
-    private void exitProgram(Stage exitStage){
+    public void exitProgram(){
 
+        Platform.runLater(() -> {
 
-        //Adding popups for confirming exit
+            //Adding popups for confirming exit
 
-        Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
-        exitAlert.setTitle("Confirming Exit");
-        exitAlert.setHeaderText("Are you sure you want to exit the program?");
-        exitAlert.setContentText("Current work will be saved in [placeholder]");
+            Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            exitAlert.setTitle("Confirming Exit");
+            exitAlert.setHeaderText("Are you sure you want to exit the program?");
+            exitAlert.setContentText("Current work will be saved in [placeholder]");
 
-        Optional<ButtonType> userSelection = exitAlert.showAndWait();
+            Optional<ButtonType> userSelection = exitAlert.showAndWait();
 
-        if(userSelection.isPresent() && userSelection.get() == ButtonType.OK){
-            //For debugging
-            System.out.print("Now Exiting Program");
+            if (userSelection.isPresent() && userSelection.get() == ButtonType.OK) {
+                //For debugging
+                System.out.print("Now Exiting Program");
 
-            //User said yes close program
+                //User said yes close program
 
-            //Stop the watcher
-            Platform.exit();
-            System.exit(0); // To stop Thread from running after Window closes
-        }
-        else {
-            //For debugging
-            System.out.print("Exit Canceled");
-            //User chose to cancel and not close program
-            outputLabel.setText("Exit Canceled");
-        }
+                //Stop the watcher
+                Platform.exit();
+                System.exit(0); // To stop Thread from running after Window closes
+            } else {
+                //For debugging
+                System.out.print("Exit Canceled");
+                //User chose to cancel and not close program
+                outputLabel.setText("Exit Canceled");
+            }
+        });
 
 
 
