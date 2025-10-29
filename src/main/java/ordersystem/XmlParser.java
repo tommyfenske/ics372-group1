@@ -31,11 +31,11 @@ public class XmlParser {
         // String orderID = orderElement.getAttribute("type");
         String orderType = orderElement.getElementsByTagName("OrderType").item(0).getTextContent();
 
-        // Traversing the XML file for Item data.
+        // Setting up traversal for the XML file for the Item data.
         List<Item> orderItems = new ArrayList<>();
         NodeList itemList = document.getElementsByTagName("Item");
 
-
+        // Traversing the node list for each Item element and adding them to the Item list.
         for(int i = 0; i < itemList.getLength(); i++) {
             Node node = itemList.item(i);
             if(node.getNodeType() == Node.ELEMENT_NODE) {
