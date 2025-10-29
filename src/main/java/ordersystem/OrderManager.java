@@ -149,6 +149,51 @@ public class OrderManager {
     }
 
     /**
+     * Search incoming and started orders; cancel the match and move it to completed.
+     *
+     * @param orderID id of the order to cancel
+     * @return true when the order is found and cancelled
+     */
+    public boolean cancelOrder(int orderID)
+    {
+        Iterator<Order> iterator = incomingOrders.iterator();
+
+        while (iterator.hasNext()) {
+            Order order = iterator.next();
+            if (order.getOrderID() == orderID) {
+                try {
+                    order.cancelOrder();
+                } catch (InvalidOrderStatusChange e) {
+                    return false;
+                }
+
+                iterator.remove();
+                completedOrders.add(order);
+                return true;
+            }
+        }
+
+        iterator = startedOrders.iterator();
+
+        while (iterator.hasNext()) {
+            Order order = iterator.next();
+            if (order.getOrderID() == orderID) {
+                try {
+                    order.cancelOrder();
+                } catch (InvalidOrderStatusChange e) {
+                    return false;
+                }
+
+                iterator.remove();
+                completedOrders.add(order);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Searches the all Order Lists for the orderID,
      * Searches all Order Lists for the orderID,
      * if a matching ID is found, return the order
