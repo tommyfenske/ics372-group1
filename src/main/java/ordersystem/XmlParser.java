@@ -23,7 +23,7 @@ public class XmlParser {
         Document document = builder.parse(file);
         document.getDocumentElement().normalize();
 
-        // Traversing the XML file for Order data.
+        // Getting specifically the Order data.
         NodeList orderList = document.getElementsByTagName("Order");
         Element orderElement = (Element) orderList.item(0);
 
