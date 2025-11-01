@@ -16,13 +16,13 @@ import java.util.List;
  * @author Jordan Curtis
  */
 public class XmlParser {
-    private File files = new File("test_orders");
     private ArrayList<Order> ordersToReturn = new ArrayList<>();
 
-    // Lambda expression to get an array of files with specifically names ending in '.xml' from the data directory.
-    private File[] xmlFiles = files.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml"));
+    public List<Order> xmlParsing(File filepath) {
 
-    public List<Order> xmlParsing() {
+        // Lambda expression to get an array of files with specifically names ending in '.xml' from the chosen directory.
+        File[] xmlFiles = filepath.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml"));
+
         for(File xmlFile: xmlFiles) {
             try {
                 // Create ability to parse XML document.

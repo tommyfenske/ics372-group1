@@ -96,6 +96,8 @@ public class JsonParser {
           Adding some extra Java swing, JFrame logic to force our popup
           window to the front of whatever is going on
          */
+
+        // REVIEW START
         JFrame ourFrame = new JFrame();
 
         ourFrame.setAlwaysOnTop(true);
@@ -116,6 +118,7 @@ public class JsonParser {
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
+            // Replace with
             File[] myFileArray = myChooser.getSelectedFiles();
 
             for (File singleFile : myFileArray) {
@@ -136,6 +139,7 @@ public class JsonParser {
         }
 
         return null;
+        // REVIEW END
     }
 
 

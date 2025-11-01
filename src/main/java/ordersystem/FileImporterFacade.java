@@ -1,5 +1,6 @@
 package ordersystem;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class FileImporterFacade {
     private JsonParser jsonParser;
     private XmlParser xmlParser;
     private List<Order> incomingOrders;
+    private final File filepath = new File("data");
 
     public FileImporterFacade() {
         this.jsonParser = new JsonParser();
@@ -21,7 +23,7 @@ public class FileImporterFacade {
     // Import all orders in the data directory.
     public List<Order> fileImport() {
         incomingOrders.addAll(jsonParser.jsonParsing());
-        incomingOrders.addAll(xmlParser.xmlParsing());
+        incomingOrders.addAll(xmlParser.xmlParsing(filepath));
 
         return incomingOrders;
     }
@@ -33,7 +35,7 @@ public class FileImporterFacade {
         if(fileType.equalsIgnoreCase("json")) {
             importOrders.addAll(jsonParser.jsonParsing());
         } else if (fileType.equalsIgnoreCase("xml")) {
-            importOrders.addAll(xmlParser.xmlParsing());
+            importOrders.addAll(xmlParser.xmlParsing(filepath));
         } else {
             System.err.println("Unsupported file type: " + fileType);
         }
