@@ -219,6 +219,8 @@ public class GUIController extends Application {
             updateGUIOrders();
             outputLabel.setText("Order Canceled.");
             orderErrorLabel.setVisible(false);
+            selectedOrderLabel = null;
+            selectedOrderDisplayLabel.setText("");
         } else {
             orderErrorLabel.setVisible(true);
             orderErrorLabel.setText("ERROR: Order is already completed and cannot be canceled.");
@@ -266,6 +268,7 @@ public class GUIController extends Application {
         // Create label
         Label myLabel = new Label(order.toString());
         myLabel.setUserData(order);
+        myLabel.getStyleClass().add("order-label");
 
         // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
         myLabel.setOnMouseClicked(event -> {
