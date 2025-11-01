@@ -11,7 +11,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.awt.Desktop;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.*;
 
 
@@ -28,11 +32,13 @@ import java.util.*;
 public class GUIController extends Application {
 
     private static OrderManager orderManager;
+    private Label selectedOrderLabel;
 
     /**
      * Creating the buttons, labels and components needed to have
      * our GUIController be responsive in the way that we need it to be
      */
+    @FXML private Button openDirectoryButton;
     @FXML private Button importButton;
     @FXML private Button exportButton;
     @FXML private Button loadOrderButton;
@@ -44,10 +50,10 @@ public class GUIController extends Application {
 
     @FXML private Button exitButton;
 
-    @FXML private Label orderStatusLabel;
     @FXML private Label headerLabel;
     @FXML private Label outputLabel;
 
+    @FXML private Label selectedOrderDisplayLabel;
     @FXML private VBox incomingOrderList;
     @FXML private VBox startedOrderList;
     @FXML private VBox completedOrderList;
@@ -81,15 +87,11 @@ public class GUIController extends Application {
         OrderManager.setupWatcher();
     }
 
-
-
-
     public void stop() throws Exception {
 
         orderManager.stopWatcher();
         Platform.exit();
         System.exit(0); // To stop Thread from running after Window closes
-
 
     }
 
@@ -157,15 +159,44 @@ public class GUIController extends Application {
     }
 
     @FXML
-    public void addIncomingOrders() throws NullPointerException {
-        List<Item> testList = new ArrayList<>();
+    public void addIncomingOrders(List<Order> orders) throws NullPointerException {
+        for (Order o :  orders) {
+            incomingOrderList.getChildren().add( labelFromOrder( o ) );
+        }
 
-        incomingOrderList.getChildren().add( labelFromOrder( new Order("togo", testList, Order.orderStatus.INCOMING) ) );
+
     }
 
-    @FXML public void startOrder(int orderID){
+    @FXML
+    public void startOrder(){
+        if (selectedOrderLabel == null) return;
+        Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+        if (selectedOrder.getStatus() != Order.orderStatus.INCOMING) return;
 
-        outputLabel.setText("Order Started...");
+        orderManager.startOrder(selectedOrder.getOrderID());
+        updateGUIOrders();
+        outputLabel.setText("Order Started.");
+    }
+
+    @FXML
+    public void completeOrder(){
+        if (selectedOrderLabel == null) return;
+        Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+        if (selectedOrder.getStatus() != Order.orderStatus.STARTED) return;
+
+        orderManager.completeOrder(selectedOrder.getOrderID());
+        updateGUIOrders();
+        outputLabel.setText("Order Completed.");
+    }
+
+    @FXML
+    public void openDirectory() throws IOException {
+        Desktop desktop = Desktop.getDesktop();
+        File dataDir = new File("data");
+        URI uri = dataDir.toURI();
+        desktop.browse(uri);
+
+        //desktop.browse("");
     }
 
     /**
@@ -176,6 +207,7 @@ public class GUIController extends Application {
     private Label labelFromOrder(Order order) {
         // Create label
         Label myLabel = new Label(order.toString());
+        myLabel.setUserData(order);
 
         // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
         myLabel.setOnMouseClicked(event -> {
@@ -190,8 +222,11 @@ public class GUIController extends Application {
      * @author Tommy Fenske
      */
     private void orderLabelClicked(Label label) {
-        // Temporary code to prove it works
-        System.out.println(label.getText());
+        if (! (label.getUserData() instanceof Order) ) return;
+        selectedOrderLabel = label;
+        selectedOrderLabel.setStyle("-fx-background-color: gold;");
+        Order order = (Order) label.getUserData();
+        selectedOrderDisplayLabel.setText("Selected Order ID: " + order.getOrderID());
     }
 
     /**

@@ -69,13 +69,16 @@ public class JsonParser {
                             orderItems.add(newItem);
                         }
 
+                        Jreader.close();
                         ordersToReturn.add(new Order(orderType,  orderItems, Order.orderStatus.INCOMING));
                     } catch (Exception e) {
                         System.err.println("Cannot import order due to an error in the data/format of the JSON file: " + jsonFile.getName());
                     }
                 }
+
                 // Return filled ArrayList of Orders
                 return ordersToReturn;
+
             }
 
 

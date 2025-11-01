@@ -33,9 +33,10 @@ public class OrderManager {
      * @author Tommy Fenske
      */
     void fileFromJSON() {
-        JsonParser jp = new JsonParser();
-        List<Order> newOrders = jp.jsonParsing();
-        incomingOrders.addAll(newOrders);
+        // TODO: Commented out code since we don't use this function. Should we delete it?
+        //JsonParser jp = new JsonParser();
+        //List<Order> newOrders = jp.jsonParsing();
+        //incomingOrders.addAll(newOrders);
 
         // Update GUIController after new orders have been added
 
@@ -246,16 +247,18 @@ public class OrderManager {
                 }
                 Platform.runLater(() -> {
                     //System.out.println("Poll");
+
+                    //FileImporterFacade.parse();
+                    //Get Order List from FileHandler
+                    FileImporterFacade facade = new FileImporterFacade();
+                    List<Order> incoming = facade.fileImport();
+                    incomingOrders.addAll(incoming);
+                    guiController.updateGUIOrders();
+
+                    // This deletes files
                     for (String s : dataDir.list()) {
-                        // TODO: handle null pointer exception? Might cause a bug
-                        System.out.println(s);
                         // Get reference to individual file
                         File currentFile = new File( dataDir.getPath() + "/" + s);
-
-                        // TODO: Code for sending file to the FileHandler will go here
-                        //Get Order List from FileHandler
-                        //incomingOrders.addAll(orders);
-                        guiController.addIncomingOrders();
 
                         // Delete file
                         if (currentFile.delete()) {
