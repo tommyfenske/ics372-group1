@@ -17,7 +17,7 @@
     <!-- <Button fx:id="loadOrderButton" onAction="#listOrders" text="Load Orders" /> -->
     <Button fx:id="startOrderButton" onAction="#startOrder" text="Start Order" />
     <Button fx:id="completeOrderButton" onAction="#completeOrder" text="Complete Order" />
-    <Button fx:id="cancelOrderButton" onAction="#listOrders" text="Cancel Order" />
+    <Button fx:id="cancelOrderButton" onAction="#cancelOrder" text="Cancel Order" />
     <Button fx:id="exitButton" onAction="#exitProgram" text="Exit Program" />
 </HBox>
 

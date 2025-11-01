@@ -16,6 +16,7 @@ public class OrderManager {
     private static List<Order> incomingOrders;
     private static List<Order> startedOrders;
     private static List<Order> completedOrders;
+    private static List<Order> cancelledOrders;
 
     public OrderManager(GUIController controller) {
         guiController = controller;
@@ -23,8 +24,7 @@ public class OrderManager {
         incomingOrders = new ArrayList<Order>();
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
-
-        //setupWatcher(this, guiController);
+        cancelledOrders = new ArrayList<Order>();
     }
 
     /**
@@ -168,7 +168,7 @@ public class OrderManager {
                 }
 
                 iterator.remove();
-                completedOrders.add(order);
+                cancelledOrders.add(order);
                 return true;
             }
         }
@@ -185,7 +185,7 @@ public class OrderManager {
                 }
 
                 iterator.remove();
-                completedOrders.add(order);
+                cancelledOrders.add(order);
                 return true;
             }
         }

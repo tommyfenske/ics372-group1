@@ -188,6 +188,16 @@ public class GUIController extends Application {
         outputLabel.setText("Order Completed.");
     }
 
+    public void cancelOrder() {
+        if (selectedOrderLabel == null) return;
+        Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+        if (selectedOrder.getStatus() == Order.orderStatus.COMPLETE) return;
+
+        orderManager.cancelOrder(selectedOrder.getOrderID());
+        updateGUIOrders();
+        outputLabel.setText("Order Canceled.");
+    }
+
     @FXML
     public void openDataDirectory() throws IOException {
         // TODO: add exception handling
