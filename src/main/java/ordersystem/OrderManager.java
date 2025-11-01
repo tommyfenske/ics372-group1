@@ -258,7 +258,7 @@ public class OrderManager {
 
                     // Add parsed orders to the incomingOrders ArrayList, then update GUI
                     incomingOrders.addAll(incoming);
-                    guiController.updateGUIOrders();
+                    if (!incoming.isEmpty()) guiController.updateGUIOrders();
 
                     // Delete each file so it isn't parsed again
                     for (String s : dataDir.list()) {
