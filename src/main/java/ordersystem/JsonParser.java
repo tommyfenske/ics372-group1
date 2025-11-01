@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 
-public class FileHandler {
+public class JsonParser {
 
     /**
      * Creating the logic that takes in the JSON files and turns them into

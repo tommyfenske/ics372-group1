@@ -4,7 +4,6 @@ import java.util.*;
 
 import javafx.application.Platform;
 import java.io.File;
-import java.nio.file.*;
 
 /**
  * This class handles all the orders: incoming, started, and completed
@@ -34,8 +33,8 @@ public class OrderManager {
      * @author Tommy Fenske
      */
     void fileFromJSON() {
-        FileHandler fh = new FileHandler();
-        List<Order> newOrders = fh.jsonParsing();
+        JsonParser jp = new JsonParser();
+        List<Order> newOrders = jp.jsonParsing();
         incomingOrders.addAll(newOrders);
 
         // Update GUIController after new orders have been added
