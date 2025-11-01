@@ -38,7 +38,6 @@ public class GUIController extends Application {
      * Creating the buttons, labels and components needed to have
      * our GUIController be responsive in the way that we need it to be
      */
-    @FXML private Button openDirectoryButton;
     @FXML private Button importButton;
     @FXML private Button exportButton;
     @FXML private Button loadOrderButton;
@@ -190,10 +189,22 @@ public class GUIController extends Application {
     }
 
     @FXML
-    public void openDirectory() throws IOException {
-        Desktop desktop = Desktop.getDesktop();
+    public void openDataDirectory() throws IOException {
+        // TODO: add exception handling
         File dataDir = new File("data");
-        URI uri = dataDir.toURI();
+        openDirectory(dataDir);
+    }
+
+    @FXML
+    public void openTestDirectory() throws IOException {
+        // TODO: add exception handling
+        File exampleDir = new File("test_orders");
+        openDirectory(exampleDir);
+    }
+
+    public void openDirectory(File directory) throws IOException {
+        Desktop desktop = Desktop.getDesktop();
+        URI uri = directory.toURI();
         desktop.browse(uri);
 
         //desktop.browse("");
