@@ -5,6 +5,7 @@ import javax.json.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,33 +20,29 @@ import java.util.List;
 
 
 public class JsonParser {
+    private ArrayList<Order> ordersToReturn = new ArrayList<>();
 
-    /**
-     * Creating the logic that takes in the JSON files and turns them into
-     * Order type objects, extracting all the necessary things
-     * I used a private method to ensure that the logic dor the user is
-     * usable but not accessible
-     *
-     * @return One or more Objects of Order type
-     */
+    public List<Order> jsonParsing(File filepath) {
 
-    public List<Order> jsonParsing() {
-            //Array of files, if one file, only one element if many, many elements
-            //Calling our private method
-            File[] filesToParse = fileFinder();
+            // Filter for only files ending in JSON.
+            FilenameFilter filter = new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".json");
+                }
+            };
 
-            // Create ArrayList of orders to return
-            ArrayList<Order> ordersToReturn = new ArrayList<>();
+            // Array of files containing only the JSON files based on the filter.
+            File[] jsonFiles = filepath.listFiles(filter);
 
-            if (filesToParse == null) return ordersToReturn; //if empty files, return empty arraylist
+            if (jsonFiles == null) return ordersToReturn; //if empty files, return empty arraylist
             else {
 
-                for (File singleFile : filesToParse) {
-                        try {
-                        JsonReader Jreader =
-                                Json.createReader(new FileReader(singleFile));
+                for (File jsonFile : jsonFiles) {
+                    try {
+                        JsonReader Jreader = Json.createReader(new FileReader(jsonFile));
 
-                        System.out.println("Loaded JSON data from files: " + singleFile.getName());
+                        System.out.println("Loaded JSON data from files: " + jsonFile.getName());
                         // Get JSON "order" object
 
                         JsonObject readObject = Jreader.readObject();
@@ -72,12 +69,9 @@ public class JsonParser {
                             orderItems.add(newItem);
                         }
 
-                        // Fill Out New Order Object
-                        Order newOrder = new Order(orderType,  orderItems, Order.orderStatus.INCOMING);
-                        ordersToReturn.add(newOrder);
-
+                        ordersToReturn.add(new Order(orderType,  orderItems, Order.orderStatus.INCOMING));
                     } catch (Exception e) {
-                        System.out.println("Failed to read file " + singleFile.getName() + ", " +e);
+                        System.err.println("Cannot import order due to an error in the data/format of the JSON file: " + jsonFile.getName());
                     }
                 }
                 // Return filled ArrayList of Orders
@@ -90,14 +84,9 @@ public class JsonParser {
         //Private file Finder and validator to ensure user does not
         //Have access to this logic
 
+    /*
     private static File[] fileFinder() {
 
-        /*
-          Adding some extra Java swing, JFrame logic to force our popup
-          window to the front of whatever is going on
-         */
-
-        // REVIEW START
         JFrame ourFrame = new JFrame();
 
         ourFrame.setAlwaysOnTop(true);
@@ -114,7 +103,9 @@ public class JsonParser {
         //Makes it easy to handle only JSON files
         myChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("JSON Files", "json"));
 
+
         int result = myChooser.showOpenDialog(ourFrame);
+
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
@@ -139,8 +130,8 @@ public class JsonParser {
         }
 
         return null;
-        // REVIEW END
     }
+    */
 
 
 

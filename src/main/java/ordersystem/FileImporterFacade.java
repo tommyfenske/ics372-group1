@@ -22,7 +22,7 @@ public class FileImporterFacade {
 
     // Import all orders in the data directory.
     public List<Order> fileImport() {
-        incomingOrders.addAll(jsonParser.jsonParsing());
+        incomingOrders.addAll(jsonParser.jsonParsing(filepath));
         incomingOrders.addAll(xmlParser.xmlParsing(filepath));
 
         return incomingOrders;
@@ -33,7 +33,7 @@ public class FileImporterFacade {
         List<Order> importOrders = new ArrayList<Order>();
 
         if(fileType.equalsIgnoreCase("json")) {
-            importOrders.addAll(jsonParser.jsonParsing());
+            importOrders.addAll(jsonParser.jsonParsing(filepath));
         } else if (fileType.equalsIgnoreCase("xml")) {
             importOrders.addAll(xmlParser.xmlParsing(filepath));
         } else {
