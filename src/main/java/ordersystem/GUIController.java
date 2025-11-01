@@ -272,6 +272,7 @@ public class GUIController extends Application {
             if (event.getSource() instanceof Label) orderLabelClicked( (Label)event.getSource() );
         });
 
+        myLabel.getStyleClass().add("order-label");
         return myLabel;
     }
 
