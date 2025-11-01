@@ -134,7 +134,7 @@ public class OrderManager {
             Order order = iterator.next();
             if (order.getOrderID() == orderID) {
                 try {
-                    order.closeOrder();
+                    order.completeOrder();
                 } catch (InvalidOrderStatusChange e) {
                     return false;
                 }
@@ -227,13 +227,18 @@ public class OrderManager {
      * into one Json file
      * @author Ruben Vallejo
      */
-
     public void fileExport(){
         ExportFile fileToExport = new ExportFile();
         fileToExport.exportOrdersToJSON(this.getIncomingOrders(),
                 this.getStartedOrders(),this.getCompletedOrders());
     }
 
+    /**
+     * Called in the GUIController's start() function.
+     * Creates a new thread that sleeps for 1000ms, before calling the FileImporterFacade to parse any files
+     * in the data directory. Files are then deleted to prevent duplication.
+     * @author Tommy Fenske
+     */
     public static void setupWatcher() {
         Thread t = new Thread(() -> {
             File dataDir = new File("data");
@@ -246,20 +251,19 @@ public class OrderManager {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
-                    //System.out.println("Poll");
-
-                    //FileImporterFacade.parse();
-                    //Get Order List from FileHandler
+                    // Setup FileImporterFacade
                     FileImporterFacade facade = new FileImporterFacade();
+                    // Get parsed orders from importer
                     List<Order> incoming = facade.fileImport();
+
+                    // Add parsed orders to the incomingOrders ArrayList, then update GUI
                     incomingOrders.addAll(incoming);
                     guiController.updateGUIOrders();
 
-                    // This deletes files
+                    // Delete each file so it isn't parsed again
                     for (String s : dataDir.list()) {
                         // Get reference to individual file
                         File currentFile = new File( dataDir.getPath() + "/" + s);
-
                         // Delete file
                         if (currentFile.delete()) {
                             System.out.println("Deleted the file: " + currentFile.getName());
@@ -274,7 +278,11 @@ public class OrderManager {
         t.start();
     }
 
-    public void stopWatcher() {
-        pollDirectory = false;
+    /**
+     * Sets the value of the pollDirectory boolean, starting or stopping polling of the data directory.
+     * @param isPolling determines if Thread should poll directory.
+     */
+    public void toggleWatcher(boolean isPolling) {
+        pollDirectory = isPolling;
     }
 }

@@ -32,7 +32,6 @@ import java.util.*;
 public class GUIController extends Application {
 
     private static OrderManager orderManager;
-    private Label selectedOrderLabel;
 
     /**
      * Creating the buttons, labels and components needed to have
@@ -52,7 +51,9 @@ public class GUIController extends Application {
     @FXML private Label headerLabel;
     @FXML private Label outputLabel;
 
+    @FXML private Label selectedOrderLabel;
     @FXML private Label selectedOrderDisplayLabel;
+    @FXML private Label orderErrorLabel;
     @FXML private VBox incomingOrderList;
     @FXML private VBox startedOrderList;
     @FXML private VBox completedOrderList;
@@ -64,16 +65,12 @@ public class GUIController extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
         FXMLLoader sceneLoader = new FXMLLoader(getClass().getResource("GUIView.fxml"));
         Scene scene = new Scene(sceneLoader.load());
-
         //Getting controller
         GUIController controller = sceneLoader.getController();
 
-
         //Adding logic for the close function to fix the bug of the thread staying open
-
         stage.setOnCloseRequest(event -> {
             event.consume(); // This stops fx from auto closing
             controller.exitProgram();
@@ -86,9 +83,16 @@ public class GUIController extends Application {
         OrderManager.setupWatcher();
     }
 
+    // Called AFTER FXML is loaded.
+    public void initialize() {
+        // Even when the orderErrorLabel style visibility is set to false, it shows when App is loaded.
+        // So it needs to be manually set to false here.
+        orderErrorLabel.setVisible(false);
+    }
+
     public void stop() throws Exception {
 
-        orderManager.stopWatcher();
+        orderManager.toggleWatcher(false);
         Platform.exit();
         System.exit(0); // To stop Thread from running after Window closes
 
@@ -168,34 +172,67 @@ public class GUIController extends Application {
 
     @FXML
     public void startOrder(){
-        if (selectedOrderLabel == null) return;
+        if (selectedOrderLabel == null) {
+            noSelectionError();
+            return;
+        }
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
-        if (selectedOrder.getStatus() != Order.orderStatus.INCOMING) return;
-
-        orderManager.startOrder(selectedOrder.getOrderID());
-        updateGUIOrders();
-        outputLabel.setText("Order Started.");
+        if (selectedOrder.getStatus() == Order.orderStatus.INCOMING) {
+            orderManager.startOrder(selectedOrder.getOrderID());
+            updateGUIOrders();
+            outputLabel.setText("Order Started.");
+            orderErrorLabel.setVisible(false);
+        } else {
+            orderErrorLabel.setVisible(true);
+            orderErrorLabel.setText("ERROR: Order needs to be Incoming in order to be Started.");
+        }
     }
 
     @FXML
     public void completeOrder(){
-        if (selectedOrderLabel == null) return;
+        if (selectedOrderLabel == null) {
+            noSelectionError();
+            return;
+        }
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
-        if (selectedOrder.getStatus() != Order.orderStatus.STARTED) return;
+        if (selectedOrder.getStatus() == Order.orderStatus.STARTED) {
+            orderManager.completeOrder(selectedOrder.getOrderID());
+            updateGUIOrders();
+            outputLabel.setText("Order Completed.");
+            orderErrorLabel.setVisible(false);
+        } else {
+            orderErrorLabel.setVisible(true);
+            orderErrorLabel.setText("ERROR: Order needs to be Started in order to be Completed.");
+        }
 
-        orderManager.completeOrder(selectedOrder.getOrderID());
-        updateGUIOrders();
-        outputLabel.setText("Order Completed.");
+
     }
 
     public void cancelOrder() {
-        if (selectedOrderLabel == null) return;
+        if (selectedOrderLabel == null) {
+            noSelectionError();
+            return;
+        }
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
-        if (selectedOrder.getStatus() == Order.orderStatus.COMPLETE) return;
+        if (selectedOrder.getStatus() != Order.orderStatus.COMPLETE) {
+            orderManager.cancelOrder(selectedOrder.getOrderID());
+            updateGUIOrders();
+            outputLabel.setText("Order Canceled.");
+            orderErrorLabel.setVisible(false);
+        } else {
+            orderErrorLabel.setVisible(true);
+            orderErrorLabel.setText("ERROR: Order is already completed and cannot be canceled.");
+        }
+    }
 
-        orderManager.cancelOrder(selectedOrder.getOrderID());
-        updateGUIOrders();
-        outputLabel.setText("Order Canceled.");
+    private void noSelectionError() {
+        orderErrorLabel.setVisible(true);
+        orderErrorLabel.setText("ERROR: No Order selected.");
+    }
+
+    @FXML
+    public void orderErrorLabelClicked() {
+        orderErrorLabel.setVisible(false);
     }
 
     @FXML
