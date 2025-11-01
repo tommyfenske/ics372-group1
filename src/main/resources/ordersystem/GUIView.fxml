@@ -3,41 +3,40 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="35" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersystem.GUIController">
-    <Label fx:id="headerLabel" style="-fx-font-size: 18px" text="Welcome to the Order System!" />
-    <Label fx:id="outputLabel" style="-fx-font-size: 18px" text="Placeholder" />
+<VBox alignment="CENTER" spacing="35"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ordersystem.GUIController"
+      stylesheets="@style.css">
 
-<!--Top control bar -->
+    <Label fx:id="headerLabel" text="Welcome to the Order System!" styleClass="header-label"/>
+    <Label fx:id="outputLabel" text="Placeholder" styleClass="output-label"/>
 
-<HBox alignment="CENTER" spacing="30">
-    <Button fx:id="openTestDirButton" onAction="#openTestDirectory" text="Open Test Orders Directory" />
-    <Button fx:id="openDataDirButton" onAction="#openDataDirectory" text="Open Data Directory" />
-    <!-- <Button fx:id="importButton" onAction="#importOrders" text="Import File" /> -->
-    <!-- <Button fx:id="exportButton" onAction="#exportOrders" text="Export File" /> -->
-    <!-- <Button fx:id="loadOrderButton" onAction="#listOrders" text="Load Orders" /> -->
-    <Button fx:id="startOrderButton" onAction="#startOrder" text="Start Order" />
-    <Button fx:id="completeOrderButton" onAction="#completeOrder" text="Complete Order" />
-    <Button fx:id="cancelOrderButton" onAction="#cancelOrder" text="Cancel Order" />
-    <Button fx:id="exitButton" onAction="#exitProgram" text="Exit Program" />
-</HBox>
+    <!-- Top control bar -->
+    <HBox alignment="CENTER" spacing="30" styleClass="control-bar">
+        <Button fx:id="openTestDirButton" onAction="#openTestDirectory" text="Open Test Orders Directory" />
+        <Button fx:id="openDataDirButton" onAction="#openDataDirectory" text="Open Data Directory" />
+        <Button fx:id="startOrderButton" onAction="#startOrder" text="Start Order" />
+        <Button fx:id="completeOrderButton" onAction="#completeOrder" text="Complete Order" />
+        <Button fx:id="cancelOrderButton" onAction="#cancelOrder" text="Cancel Order" />
+        <Button fx:id="exitButton" onAction="#exitProgram" text="Exit Program" />
+    </HBox>
 
+    <Label fx:id="selectedOrderDisplayLabel" text="Placeholder" styleClass="selected-order-label"/>
 
-    <Label fx:id="selectedOrderDisplayLabel" style="-fx-font-size: 18px" text="Placeholder" />
-
-    <HBox alignment="CENTER" spacing="30">
+    <HBox alignment="CENTER" spacing="30" styleClass="order-columns">
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="incomingListLabel" style="-fx-font-size: 18px" text="Incoming" />
-            <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="incomingListLabel" text="Incoming" styleClass="section-title"/>
+            <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list"/>
         </VBox>
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="startedListLabel" style="-fx-font-size: 18px" text="Started" />
-            <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="startedListLabel" text="Started" styleClass="section-title"/>
+            <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list"/>
         </VBox>
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="completedListLabel" style="-fx-font-size: 18px" text="Completed" />
-            <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="completedListLabel" text="Completed" styleClass="section-title"/>
+            <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list"/>
         </VBox>
-
     </HBox>
 
 </VBox>
