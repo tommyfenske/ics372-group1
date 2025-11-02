@@ -258,9 +258,13 @@ public class GUIController extends Application {
     }
 
     public void openDirectory(File directory) throws IOException {
+        // Create directory if it doesn't exist
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        
         Desktop desktop = Desktop.getDesktop();
-        URI uri = directory.toURI();
-        desktop.browse(uri);
+        desktop.open(directory);
 
         //desktop.browse("");
     }

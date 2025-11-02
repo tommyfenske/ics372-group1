@@ -23,7 +23,13 @@ public class XmlParser {
         // Lambda expression to get an array of files with specifically names ending in '.xml' from the chosen directory.
         File[] xmlFiles = filepath.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml"));
 
-        for(File xmlFile: xmlFiles) {
+        // Check if directory exists or contains XML files before processing
+        if (xmlFiles == null || xmlFiles.length == 0) {
+            System.err.println("No XML files found or directory not accessible: " + filepath.getAbsolutePath());
+            return ordersToReturn;
+        }
+
+        for (File xmlFile : xmlFiles) {
             try {
                 // Create ability to parse XML document.
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newDefaultInstance();
@@ -63,6 +69,5 @@ public class XmlParser {
         }
 
         return ordersToReturn;
-
     }
 }
