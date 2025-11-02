@@ -261,9 +261,18 @@ public class OrderManager {
                     guiController.updateGUIOrders();
 
                     // Delete each file so it isn't parsed again
-                    for (String s : dataDir.list()) {
+                    for (String s : Objects.requireNonNull(dataDir.list())) {
+
+
                         // Get reference to individual file
                         File currentFile = new File( dataDir.getPath() + "/" + s);
+
+
+                        //Adding logic to ensure data folder exists
+                        if(!dataDir.exists()){
+
+                            dataDir.mkdirs();
+                        }
                         // Delete file
                         if (currentFile.delete()) {
                             System.out.println("Deleted the file: " + currentFile.getName());

@@ -240,7 +240,13 @@ public class GUIController extends Application {
     @FXML
     public void openDataDirectory() throws IOException {
         // TODO: add exception handling
+
         File dataDir = new File("data");
+        //Adding logic to ensure data folder exists
+        if(!dataDir.exists()){
+
+            dataDir.mkdirs();
+        }
         openDirectory(dataDir);
     }
 
