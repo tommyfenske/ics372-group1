@@ -1,0 +1,12 @@
+{
+  "order": {
+    "type": "Pickup",
+    "items": [
+      {
+        "name": "Taco",
+        "price": 5.99,
+        "quantity": 2
+      }
+    ]
+  }
+  // Missing closing brace - invalid JSON

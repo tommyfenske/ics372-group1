@@ -1,0 +1,13 @@
+<Orders>
+    <Order id="123">
+        <OrderType>Pickup</OrderType>
+        <Item type="Pizza">
+            <Price>15.99</Price>
+            <Quantity>1</Quantity>
+        </Item>
+        <Item type="Soda">
+            <Price>2.50</Price>
+            <Quantity>2</Quantity>
+        </Item>
+    </Order>
+</Orders>

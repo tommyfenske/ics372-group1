@@ -1,0 +1,9 @@
+<Orders>
+    <Order id="888">
+        <OrderType>Pickup</OrderType>
+        <Item type="Salad">
+            <Price>NotANumber</Price>
+            <Quantity>1</Quantity>
+        </Item>
+    </Order>
+</Orders>
