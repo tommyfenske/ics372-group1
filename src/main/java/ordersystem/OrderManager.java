@@ -18,6 +18,12 @@ public class OrderManager {
     private static List<Order> completedOrders;
     private static List<Order> cancelledOrders;
 
+    public OrderManager() {
+        incomingOrders = new ArrayList<Order>();
+        startedOrders = new ArrayList<Order>();
+        completedOrders = new ArrayList<Order>();
+        cancelledOrders = new ArrayList<Order>();
+    }
     public OrderManager(GUIController controller) {
         guiController = controller;
 
@@ -25,6 +31,9 @@ public class OrderManager {
         startedOrders = new ArrayList<Order>();
         completedOrders = new ArrayList<Order>();
         cancelledOrders = new ArrayList<Order>();
+    }
+    public void setGUIController(GUIController controller) {
+        guiController = controller;
     }
 
     /**
@@ -40,17 +49,6 @@ public class OrderManager {
 
         // Update GUIController after new orders have been added
 
-    }
-
-    /**
-     *
-     * This setter is needed to link TerminalInterface, it was breaking our
-     * code when we had it set as an object and then referencing it back in
-     * the Terminal Interface class
-     * @author Ruben Vallejo
-     */
-    public void setTerminalInterface(TerminalInterface terminalInterface){
-        //this.terminalInterface = terminalInterface;
     }
 
     /**
@@ -242,6 +240,7 @@ public class OrderManager {
     public static void setupWatcher() {
         Thread t = new Thread(() -> {
             File dataDir = new File("data");
+            if (!dataDir.exists()) {dataDir.mkdir();}
 
             while(pollDirectory) {
                 try {
@@ -251,14 +250,18 @@ public class OrderManager {
                     throw new RuntimeException(e);
                 }
                 Platform.runLater(() -> {
+                    if (dataDir.list().length <= 0) return;
                     // Setup FileImporterFacade
                     FileImporterFacade facade = new FileImporterFacade();
                     // Get parsed orders from importer
                     List<Order> incoming = facade.fileImport();
 
-                    // Add parsed orders to the incomingOrders ArrayList, then update GUI
-                    incomingOrders.addAll(incoming);
-                    if (!incoming.isEmpty()) guiController.updateGUIOrders();
+                    // If new orders need to be added
+                    if (!incoming.isEmpty()) {
+                        // Add parsed orders to the incomingOrders ArrayList, then update GUI
+                        incomingOrders.addAll(incoming);
+                        guiController.updateGUIOrders();
+                    }
 
                     // Delete each file so it isn't parsed again
                     for (String s : dataDir.list()) {

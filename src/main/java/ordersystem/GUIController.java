@@ -15,7 +15,6 @@ import java.awt.Desktop;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.*;
 
 
@@ -59,7 +58,10 @@ public class GUIController extends Application {
     @FXML private VBox completedOrderList;
 
     public GUIController() {
-       orderManager = new OrderManager(this);
+        // Create save directory and save file if they do not exist
+        Saver.setup();
+        orderManager = Saver.loadOrderManager(Saver.getSaveFile());
+        orderManager.setGUIController(this);
     }
 
 
@@ -88,6 +90,8 @@ public class GUIController extends Application {
         // Even when the orderErrorLabel style visibility is set to false, it shows when App is loaded.
         // So it needs to be manually set to false here.
         orderErrorLabel.setVisible(false);
+
+        updateGUIOrders();
     }
 
     public void stop() throws Exception {
@@ -111,13 +115,15 @@ public class GUIController extends Application {
             Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
             exitAlert.setTitle("Confirming Exit");
             exitAlert.setHeaderText("Are you sure you want to exit the program?");
-            exitAlert.setContentText("Current work will be saved in [placeholder]");
+            exitAlert.setContentText("Current work will be saved in " + Saver.getSaveDirectory());
 
             Optional<ButtonType> userSelection = exitAlert.showAndWait();
 
             if (userSelection.isPresent() && userSelection.get() == ButtonType.OK) {
                 //For debugging
                 System.out.print("Now Exiting Program");
+                System.out.println("Order System has been stopped");
+                Saver.saveOrderManager(orderManager);
 
                 //User said yes close program
 

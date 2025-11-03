@@ -25,7 +25,8 @@ public class Order {
      */
     enum orderStatus{INCOMING,STARTED,COMPLETE,INCOMPLETE,CLOSED,CANCELED}
 
-
+    public Order() {}
+    public Order(String orderType, String status, LocalDateTime openTime, LocalDateTime closeTime) {}
     /**
      * Constructor for Order class
      * @param orderType Type of order like pickup, delivery, etc
