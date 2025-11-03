@@ -38,7 +38,7 @@ public class Saver {
             // If directory and file already exist, load the first file in the save directory
             System.out.println("Directory already exists: " + saveDir.list()[0]);
             saveFile = saveDir.listFiles()[0];
-            saveOrderManager( loadOrderManager(saveFile) );
+            saveOrderManager( loadOrderManager() );
         }
     }
 
@@ -58,7 +58,7 @@ public class Saver {
         }
     }
 
-    public static OrderManager loadOrderManager(File file) {
+    public static OrderManager loadOrderManager() {
         //mapper.disable(MapperFeature.REQUIRE_HANDLERS_FOR_JAVA8_TIMES);
         try {
             System.out.println("Loading order manager from save file.");

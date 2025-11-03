@@ -62,7 +62,7 @@ public class GUIController extends Application {
     public GUIController() {
         // Create save directory and save file if they do not exist
         Saver.setup();
-        orderManager = Saver.loadOrderManager(Saver.getSaveFile());
+        orderManager = Saver.loadOrderManager();
         orderManager.setGUIController(this);
     }
 
