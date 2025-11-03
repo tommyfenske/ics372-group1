@@ -324,6 +324,7 @@ public class GUIController extends Application {
      */
     private void orderLabelClicked(Label label) {
         if (! (label.getUserData() instanceof Order) ) return;
+        if (selectedOrderLabel != null) selectedOrderLabel.setStyle("");
         selectedOrderLabel = label;
         selectedOrderLabel.setStyle("-fx-background-color: gold;");
         Order order = (Order) label.getUserData();
