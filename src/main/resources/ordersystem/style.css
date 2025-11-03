@@ -75,17 +75,7 @@
     -fx-background-color:red;
     }
 
-/* Adding for specific order type */
 
-.order-label.pickup{
--fx-graphic:url("icons/pickup-icon.png");
-
-}
-
-.order-label.togo{
--fx-graphic: url("icons/to-go-icon.png");
-
-}
 
 
 /* Output lists */
