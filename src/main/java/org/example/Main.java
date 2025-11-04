@@ -1,15 +1,6 @@
 package org.example;
 import javafx.application.Application;
-import javafx.application.Platform;
 import ordersystem.*;
-
-import java.io.File;
-
-//Imports for fx
-
-
-
-
 
 public class Main {
 

@@ -36,18 +36,6 @@ public class GUIController extends Application {
      * Creating the buttons, labels and components needed to have
      * our GUIController be responsive in the way that we need it to be
      */
-    @FXML private Button importButton;
-    @FXML private Button exportButton;
-    @FXML private Button loadOrderButton;
-    @FXML private Button startOrderButton;
-    @FXML private Button completeOrderButton;
-    @FXML private Button getOrderButton;
-    @FXML private Button showOrderButton;
-    @FXML private Button cancelOrderButton;
-
-    @FXML private Button exitButton;
-
-    @FXML private Label headerLabel;
     @FXML private Label outputLabel;
 
     @FXML private Label selectedOrderLabel;
@@ -138,41 +126,11 @@ public class GUIController extends Application {
                 outputLabel.setText("Exit Canceled");
             }
         });
-
-
-
     }
-
 
     /**
      * All control functions should go below this comment
      */
-
-    @FXML
-    public void importOrders(){
-        outputLabel.setText("Importing...");
-
-    }
-
-    @FXML
-    public void exportOrders(){
-        outputLabel.setText("Exporting...");
-
-    }
-
-    @FXML
-    public void listOrders(){
-        outputLabel.setText("Loading/Listing...");
-
-    }
-
-    @FXML
-    public void addIncomingOrders(List<Order> orders) throws NullPointerException {
-        for (Order o :  orders) {
-            incomingOrderList.getChildren().add( labelFromOrder( o ) );
-        }
-    }
-
     @FXML
     public void startOrder(){
         // Display error label and return if no order is selected
