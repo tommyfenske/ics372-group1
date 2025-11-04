@@ -142,12 +142,12 @@ public class Order {
     }
 
     public String displayOrderOneLine() {
-        String handler = toString() + "\t";
+        StringBuilder handler = new StringBuilder(toString() + "\t");
 
         for(Item item: items) {
-            handler = handler + "\t" + item.toString();
+            handler.append("\t").append(item.toString());
         }
 
-        return handler;
+        return handler.toString();
     }
 }
