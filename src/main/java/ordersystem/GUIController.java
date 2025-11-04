@@ -288,24 +288,6 @@ public class GUIController extends Application {
         myLabel.setUserData(order);
         myLabel.getStyleClass().add("order-label");
 
-        //Adding extra logic for order type, togo or pickup
-        String typeOfOrder = order.getOrderType();
-        if(typeOfOrder != null) {
-            typeOfOrder = typeOfOrder.toLowerCase();
-
-            //Setting icon based on type
-            switch (typeOfOrder) {
-                case "togo" -> myLabel.getStyleClass().add("togo");
-                case "pickup" -> myLabel.getStyleClass().add("pickup");
-            }
-        }
-
-        myLabel.applyCss(); // Force CSS to apply first
-        if (myLabel.getGraphic() instanceof javafx.scene.image.ImageView iv) {
-            iv.setFitWidth(24);   // desired width
-            iv.setFitHeight(24);  // desired height
-            iv.setPreserveRatio(true);
-        }
         // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
         myLabel.setOnMouseClicked(event -> {
             if (event.getSource() instanceof Label) orderLabelClicked( (Label)event.getSource() );
