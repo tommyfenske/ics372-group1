@@ -45,8 +45,11 @@
         </ScrollPane>
     </HBox>
 
-    <HBox fx:id="orderDetailsBox" alignment="CENTER_LEFT" spacing="2" style="-fx-border-color: black; -fx-padding: 10; -fx-background-color: white;">
-        <Label fx:id="orderDetailsTitle" style="-fx-font-size: 12px; -fx-font-weight: bold;" text="Order Details" />
-        <Label fx:id="orderDetails" text="Select an order to see details" style="-fx-font-size: 10px;"/>
+    <HBox fx:id="orderDetailsBox" alignment="CENTER_LEFT" prefWidth="1341.0" spacing="2" style="-fx-border-color: black; -fx-padding: 10; -fx-background-color: white;">
+      <ScrollPane hbarPolicy="ALWAYS" vbarPolicy="NEVER" HBox.hgrow="ALWAYS">
+         <content>
+              <Label fx:id="orderDetails" style="-fx-font-size: 16px;" text="Select an order to see details" />
+         </content>
+      </ScrollPane>
     </HBox>
 </VBox>
