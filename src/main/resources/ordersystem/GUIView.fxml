@@ -3,13 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="15"
-      xmlns="http://javafx.com/javafx/17.0.12"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ordersystem.GUIController"
-      stylesheets="@style.css">
+<VBox alignment="CENTER" spacing="15" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ordersystem.GUIController">
 
-    <Label fx:id="headerLabel" text="Welcome to the Order System!" styleClass="header-label"/>
+    <Label fx:id="headerLabel" styleClass="header-label" text="Welcome to the Order System!" />
 
     <!-- Top control bar -->
     <HBox alignment="CENTER" spacing="30" styleClass="control-bar">
@@ -18,41 +14,40 @@
         <Button fx:id="startOrderButton" onAction="#startOrder" text="Start Order" />
         <Button fx:id="completeOrderButton" onAction="#completeOrder" text="Complete Order" />
         <Button fx:id="cancelOrderButton" onAction="#cancelOrder" text="Cancel Order" />
-        <Button fx:id="exitButton" onAction="#exitProgram" text="Exit Program" styleClass="exit-button"/>
+        <Button fx:id="exitButton" onAction="#exitProgram" styleClass="exit-button" text="Exit Program" />
     </HBox>
 
     <!-- Labels for manipulating orders -->
     <VBox alignment="CENTER" spacing="5">
         <Label fx:id="selectedOrderDisplayLabel" style="-fx-font-size: 18px" styleClass="selected-order-label" />
-        <Label fx:id="outputLabel"  styleClass="output-label"/>
+        <Label fx:id="outputLabel" styleClass="output-label" />
         <Label fx:id="orderErrorLabel" onMouseClicked="#orderErrorLabelClicked" style="-fx-font-size: 18px; -fx-text-fill: red; -fx-border-color:red; -fx-border-width: 1; -fx-border-style: dashed; -fx-visible: false;" />
     </VBox>
     <!-- Order lists -->
     <HBox alignment="CENTER" spacing="30" styleClass="order-columns">
-        <ScrollPane  styleClass="output-list" fitToHeight="true" fitToWidth="true">
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="output-list">
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="incomingListLabel" style="-fx-font-size: 18px" text="Incoming" styleClass="section-title"/>
-            <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="incomingListLabel" style="-fx-font-size: 18px" styleClass="section-title" text="Incoming" />
+            <VBox fx:id="incomingOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" styleClass="order-list" />
         </VBox>
         </ScrollPane>
-        <ScrollPane styleClass="output-list" fitToHeight="true" fitToWidth="true">
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="output-list">
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="startedListLabel" style="-fx-font-size: 18px" text="Started" styleClass="section-title"/>
-            <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="startedListLabel" style="-fx-font-size: 18px" styleClass="section-title" text="Started" />
+            <VBox fx:id="startedOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" styleClass="order-list" />
         </VBox>
         </ScrollPane>
-        <ScrollPane styleClass="output-list" fitToHeight="true" fitToWidth="true">
+        <ScrollPane fitToHeight="true" fitToWidth="true" styleClass="output-list">
         <VBox alignment="CENTER" spacing="10">
-            <Label fx:id="completedListLabel" style="-fx-font-size: 18px" text="Completed" styleClass="section-title"/>
-            <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="400.0" styleClass="order-list" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" />
+            <Label fx:id="completedListLabel" style="-fx-font-size: 18px" styleClass="section-title" text="Completed" />
+            <VBox fx:id="completedOrderList" prefHeight="500.0" prefWidth="400.0" style=" -fx-border-color:black; -fx-border-width: 1; -fx-border-style: solid;" styleClass="order-list" />
         </VBox>
         </ScrollPane>
     </HBox>
 
-    <VBox fx:id="orderDetailsBox" spacing="8" alignment="CENTER_LEFT"
-          style="-fx-border-color: black; -fx-padding: 10; -fx-background-color: white;">
-        <Label fx:id="orderDetailsTitle" text="Order Details" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-        <Label fx:id="orderDetails" text="Select an order to see details" wrapText="true" />
+    <VBox fx:id="orderDetailsBox" alignment="CENTER_LEFT" spacing="8" style="-fx-border-color: black; -fx-padding: 10; -fx-background-color: white;">
+        <Label fx:id="orderDetailsTitle" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Order Details" />
+        <Label fx:id="orderDetails" text="Select an order to see details" wrapText="true" style="-fx-font-size: 14px;"/>
     </VBox>
 
 </VBox>

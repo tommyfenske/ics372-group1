@@ -28,17 +28,16 @@ public class Saver {
                 saveFile = new File(saveDir, saveFileName); // create the reference to the file
                 if (saveFile.createNewFile()) { // If the file creation was a success, pass a blank order manager
                     System.out.println("File created: " + saveFile.getName());
-                    saveOrderManager(new OrderManager());
+                    saveOrderManager(new OrderManager()); // save a new OrderManager object instance
                 }
             } catch (IOException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace(); // Print error details
+                System.err.println("IOException during Saver.setup: " + e.getMessage());
             }
         } else {
             // If directory and file already exist, load the first file in the save directory
             System.out.println("Directory already exists: " + saveDir.list()[0]);
             saveFile = saveDir.listFiles()[0];
-            saveOrderManager( loadOrderManager() );
+            saveOrderManager( loadOrderManager() ); // Save OrderManager that is parsed from JSON save file
         }
     }
 
@@ -63,10 +62,12 @@ public class Saver {
         try {
             System.out.println("Loading order manager from save file.");
             mapper.registerModule(new JavaTimeModule());
+            // create OrderManager object from JSON file
             OrderManager o = mapper.readValue(Files.readString(saveFile.toPath()), OrderManager.class);
             return o;
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("IOException during Saver.loadOrderManager: " + e.getMessage());
+            // If JSON file cannot be parsed, return new OrderManager object
             return new OrderManager();
         }
     }
@@ -74,6 +75,7 @@ public class Saver {
     public static File getSaveFile() {
         return saveFile;
     }
+
     public static String getSaveDirectory() {
         return saveDirName;
     }

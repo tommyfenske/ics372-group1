@@ -82,8 +82,10 @@ public class GUIController extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Order System GUIController");
+        stage.setMaximized(true);
         stage.show();
 
+        // Instantiate Thread to poll directory for new order files
         OrderManager.setupWatcher();
     }
 
@@ -92,32 +94,27 @@ public class GUIController extends Application {
         // Even when the orderErrorLabel style visibility is set to false, it shows when App is loaded.
         // So it needs to be manually set to false here.
         orderErrorLabel.setVisible(false);
-
+        // Update GUI on start
         updateGUIOrders();
     }
 
     public void stop() throws Exception {
-
         orderManager.toggleWatcher(false);
         Platform.exit();
         System.exit(0); // To stop Thread from running after Window closes
-
     }
 
     /**
      * Defining an actual end program class, to fix the bug of the thread staying open
      */
-
     public void exitProgram(){
-
         Platform.runLater(() -> {
 
             //Adding popups for confirming exit
-
             Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION);
             exitAlert.setTitle("Confirming Exit");
             exitAlert.setHeaderText("Are you sure you want to exit the program?");
-            exitAlert.setContentText("Current work will be saved in " + Saver.getSaveDirectory());
+            exitAlert.setContentText("Current work will be saved in \"" + Saver.getSaveDirectory() + "\\\"");
 
             Optional<ButtonType> userSelection = exitAlert.showAndWait();
 
@@ -125,6 +122,8 @@ public class GUIController extends Application {
                 //For debugging
                 System.out.print("Now Exiting Program");
                 System.out.println("Order System has been stopped");
+
+                // Save the OrderManager to the save file
                 Saver.saveOrderManager(orderManager);
 
                 //User said yes close program
@@ -149,8 +148,6 @@ public class GUIController extends Application {
      * All control functions should go below this comment
      */
 
-    //TODO Finish implementing all the functions needed
-
     @FXML
     public void importOrders(){
         outputLabel.setText("Importing...");
@@ -174,16 +171,17 @@ public class GUIController extends Application {
         for (Order o :  orders) {
             incomingOrderList.getChildren().add( labelFromOrder( o ) );
         }
-
-
     }
 
     @FXML
     public void startOrder(){
+        // Display error label and return if no order is selected
         if (selectedOrderLabel == null) {
             noSelectionError();
             return;
         }
+
+        // Get order from selected label's user data
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
         if (selectedOrder.getStatus() == Order.orderStatus.INCOMING) {
             orderManager.startOrder(selectedOrder.getOrderID());
@@ -198,12 +196,17 @@ public class GUIController extends Application {
 
     @FXML
     public void completeOrder(){
+        // Display error label and return if no order is selected
         if (selectedOrderLabel == null) {
             noSelectionError();
             return;
         }
+
+        // Get order from selected label's user data
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+        // If Order fits criteria to be started
         if (selectedOrder.getStatus() == Order.orderStatus.STARTED) {
+            // Update OrderManager
             orderManager.completeOrder(selectedOrder.getOrderID());
             updateGUIOrders();
             outputLabel.setText("Order Completed.");
@@ -212,32 +215,34 @@ public class GUIController extends Application {
             orderErrorLabel.setVisible(true);
             orderErrorLabel.setText("ERROR: Order needs to be Started in order to be Completed.");
         }
-
-
     }
 
+    @FXML
     public void cancelOrder() {
+        // Display error label and return if no order is selected
         if (selectedOrderLabel == null) {
             noSelectionError();
             return;
         }
+
+        // Get order from selected label's user data
         Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+        // If Order fits criteria to be completed
         if (selectedOrder.getStatus() != Order.orderStatus.COMPLETE) {
+            // Cancel order in the OrderManager
             orderManager.cancelOrder(selectedOrder.getOrderID());
             updateGUIOrders();
             outputLabel.setText("Order Canceled.");
             orderErrorLabel.setVisible(false);
+            // Remove selected order label reference
             selectedOrderLabel = null;
             selectedOrderDisplayLabel.setText("");
+            // Update Order Details Label
+            orderDetails.setText("Select an order to see details");
         } else {
             orderErrorLabel.setVisible(true);
             orderErrorLabel.setText("ERROR: Order is already completed and cannot be canceled.");
         }
-    }
-
-    private void noSelectionError() {
-        orderErrorLabel.setVisible(true);
-        orderErrorLabel.setText("ERROR: No Order selected.");
     }
 
     @FXML
@@ -247,8 +252,6 @@ public class GUIController extends Application {
 
     @FXML
     public void openDataDirectory() throws IOException {
-        // TODO: add exception handling
-
         File dataDir = new File("data");
         //Adding logic to ensure data folder exists
         if(!dataDir.exists()){
@@ -260,7 +263,6 @@ public class GUIController extends Application {
 
     @FXML
     public void openTestDirectory() throws IOException {
-        // TODO: add exception handling
         File exampleDir = new File("test_orders");
         openDirectory(exampleDir);
     }
@@ -270,11 +272,9 @@ public class GUIController extends Application {
         if (!directory.exists()) {
             directory.mkdirs();
         }
-        
+        // Open Directory
         Desktop desktop = Desktop.getDesktop();
         desktop.open(directory);
-
-        //desktop.browse("");
     }
 
     /**
@@ -289,15 +289,12 @@ public class GUIController extends Application {
         myLabel.getStyleClass().add("order-label");
 
         //Adding extra logic for order type, togo or pickup
-
         String typeOfOrder = order.getOrderType();
-
         if(typeOfOrder != null) {
             typeOfOrder = typeOfOrder.toLowerCase();
 
             //Setting icon based on type
             switch (typeOfOrder) {
-
                 case "togo" -> myLabel.getStyleClass().add("togo");
                 case "pickup" -> myLabel.getStyleClass().add("pickup");
             }
@@ -309,13 +306,30 @@ public class GUIController extends Application {
             iv.setFitHeight(24);  // desired height
             iv.setPreserveRatio(true);
         }
-            // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
+        // Add event listener that verifies it iss a Label object, then calls the orderLabelCLicked() method
         myLabel.setOnMouseClicked(event -> {
             if (event.getSource() instanceof Label) orderLabelClicked( (Label)event.getSource() );
         });
 
         myLabel.getStyleClass().add("order-label");
+
+        // If added label was previously selected, reselect it
+        if (selectedOrderLabel != null) {
+            Order selectedOrder = (Order) selectedOrderLabel.getUserData();
+            if (selectedOrder.getOrderID() == order.getOrderID()) {
+                orderLabelClicked(myLabel);
+            }
+        }
+
         return myLabel;
+    }
+
+    /**
+     * Sets the orderErrorLabel to display an error that no order was selected
+     */
+    private void noSelectionError() {
+        orderErrorLabel.setVisible(true);
+        orderErrorLabel.setText("ERROR: No Order selected.");
     }
 
     /**
@@ -329,6 +343,8 @@ public class GUIController extends Application {
         selectedOrderLabel.setStyle("-fx-background-color: gold;");
         Order order = (Order) label.getUserData();
         selectedOrderDisplayLabel.setText("Selected Order ID: " + order.getOrderID());
+
+        orderDetails.setText(order.displayOrderOneLine());
     }
 
     /**
@@ -341,7 +357,6 @@ public class GUIController extends Application {
      */
 
     public void updateGUIOrders(){
-
         incomingOrderList.getChildren().clear();
         startedOrderList.getChildren().clear();
         completedOrderList.getChildren().clear();

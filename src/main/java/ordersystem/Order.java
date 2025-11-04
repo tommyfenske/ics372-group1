@@ -140,4 +140,14 @@ public class Order {
 
         return handler;
     }
+
+    public String displayOrderOneLine() {
+        String handler = toString() + "\t";
+
+        for(Item item: items) {
+            handler = handler + "\t" + item.toString();
+        }
+
+        return handler;
+    }
 }
